@@ -1,0 +1,39 @@
+{{ define "main" }}
+  {{- $pageTitle := .Title }}
+  {{- if eq .Section "health" }}
+    {{- $pageTitle = printf "%s - %s" .Title .Params.Sub_County }}
+  {{- else if eq .Section "schools" }}
+    {{- $pageTitle = printf "%s - %s" .Title .Params.Constituency }}
+  {{- else if eq .Section "constituencies" }}
+    {{- $constName := "Constituency"}}
+    {{- $pageTitle = printf "%s %s" .Title $constName }}
+  {{- end -}}
+
+  <main id="main">
+    <div class="page-header-wrapper">
+      <div class="page-header">
+        <div class="section-title">
+          <span>{{ .FirstSection.LinkTitle }}</span>
+        </div>
+        <h1 class="page-title">{{ $pageTitle }}</h1>
+      </div>
+    </div>
+    <div class="page-article-wrapper">
+      <article class="page-article">
+        {{- if eq .Section "health" }}
+          {{- .Render "page-health" }}
+        {{- else if eq .Section "schools" }}
+          {{- .Render "page-schools" }}
+        {{- else if eq .Section "power" }}
+          {{- .Render "page-power" }}
+        {{- else if eq .Section "transmission" }}
+          {{- .Render "page-transmission" }}
+        {{- else if eq .Section "constituencies" }}
+          {{- .Render "page-constituencies" }}
+        {{- else }}
+          {{- .Content }}
+        {{- end }}
+      </article>
+    </div>
+  </main>
+{{ end }}

@@ -1,0 +1,12 @@
+{{- .FirstSection.Content }}
+<table>
+  <tbody>
+    {{ range $k, $v := .Params }}
+    <tr>
+      <td>{{- strings.FirstUpper $k }}</td>
+      <td>{{ $v }}</td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>
+<p class="notice">Disclaimer: {{ .FirstSection.Params.disclaimer }}</p>

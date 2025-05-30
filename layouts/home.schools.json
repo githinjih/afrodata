@@ -1,0 +1,19 @@
+{{- $list := slice -}}
+
+{{- $pages := where site.RegularPages "Section" "schools" -}}
+
+{{- range $pages -}}
+
+{{- $item := dict
+"title" .Title
+"Code" .Params.Code
+"Level" .Params.Level
+"County" .Params.County
+"Constituency" .Params.Constituency
+"url" .Path
+-}}
+
+{{- $list = $list | append $item -}}
+{{- end -}}
+
+{{- $list | jsonify -}}

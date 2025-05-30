@@ -1,0 +1,29 @@
+{{ define "main" }}
+<main id="main" class="list-wrapper">
+  <header class="list-header">
+    <h2>Hey There! 👋</h2>
+    <p class="list-description"><span class="title">{{ site.Title }}</span> is a website that showcases data from various sectors in Kenya to facilitate public awareness and education.</p>
+    <p>We share the data below which we hope you are going to love.</p>
+   </header>
+   <section>
+    <div class="list-container">
+      {{- /* The paginated page collection. */}}
+      {{ range .Sections }}
+      <article class="group list-article">
+         <a href="{{ .RelPermalink }}">
+           {{- partial "home/image.html" (dict "Resources" .Resources "LazyLoading" true) }}
+           <div class="list-article-container">
+            <div class="section-title">
+              <span>{{ .LinkTitle }}</span>
+            </div>
+             <h2>
+             <span class="link-gradient">{{ .Title }}</span>
+             </h2>
+           </div> 
+         </a>                    
+      </article>
+      {{- end }}
+    </div>
+  </section>
+</main>
+{{ end }}

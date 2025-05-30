@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="{{ site.Params.charset }}">
+  <meta name="viewport" content="{{ site.Params.viewport }}">
+  {{- partial "main/head.html" . -}}
+  {{- partialCached "assets/head.html" . }}
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to Content</a>
+  <div class="site-wrapper">
+    {{ partial "main/header.html" . }}
+    {{- block "main" . }}
+      <!-- The part of the page that begins to differ between templates -->
+    {{- end }}
+    {{- partial "main/footer.html" . }}
+  </div>
+  {{ partialCached "assets/svg.html" . -}}
+  {{- partial "assets/foot.html" . }}
+</body>
+</html>

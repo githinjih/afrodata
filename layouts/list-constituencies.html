@@ -1,0 +1,30 @@
+<main id="main">
+  <div class="page-header-wrapper">
+    <div class="page-header">
+      <div class="section-title">
+        <span>{{ .LinkTitle }}</span>
+      </div>
+      <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+  </div>
+  <div class="page-article-wrapper">
+    <article class="page-article">
+      <p>The data contains a list of constituencies in Kenya.</p>
+        <h2 class="text-xl mb-4 font-bold">Search constituencies</h2>
+        <div>
+          <input type="text" id="search_input"
+            class="search-input"
+            aria-label="Search by Name or County" placeholder="Search by Name or County" disabled>
+        </div>
+        <div id="search_results_container">
+         {{- /* search results appear here */}}
+        </div>
+        <ul class="list-footer notice">
+          <li>Title: Kenya Constituencies</li>
+          {{/* <li>Author: Omdena</li>
+          <li>Source: <a class="underline" href="https://data.humdata.org/dataset/json-repository/resource/51939d78-35aa-4591-9831-11e61e555130">HDX</a></li>
+          <li>License: <a class="underline" href="https://creativecommons.org/licenses/by/4.0/">CC By 4.0</a></li> */}}
+        </ul>
+    </article>
+  </div>
+</main>

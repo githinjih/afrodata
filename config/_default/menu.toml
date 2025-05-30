@@ -1,0 +1,44 @@
+# main menu (moin)
+
+[[left]]
+  name = "Health"
+  pageRef = "/health"
+  weight = 10
+
+[[left]]
+  name = "Power"
+  pageRef = "/power"
+  weight = 20
+
+[[left]]
+  name = "Schools"
+  pageRef = "/schools"
+  weight = 30
+
+[[right]]
+  name = "Transmission"
+  pageRef = "/transmission"
+  weight = 40
+
+[[right]]
+  name = "Constituencies"
+  pageRef = "/constituencies"
+  weight = 50
+
+# footer menu
+
+[[footer]]
+  name = "Privacy"
+  pageRef = "/pages/policy"
+  weight = 10
+
+[[footer]]
+  name = "Terms"
+  pageRef = "/pages/terms"
+  weight = 20
+
+[[footer]]
+  name = "Contact"
+  pageRef = "/pages/contact"
+  weight = 30
+

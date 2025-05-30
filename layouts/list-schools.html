@@ -1,0 +1,30 @@
+<main id="main">
+  <div class="page-header-wrapper">
+    <div class="page-header">
+      <div class="section-title">
+        <span>{{ .LinkTitle }}</span>
+      </div>
+      <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+  </div>
+  <div class="page-article-wrapper">
+    <article class="page-article">
+      <p>A list of primary and secondary schools in Kenya. Each school is identified with its details that include geographical location, school code, school level, anong others.</p>
+        <h2 class="text-xl mb-4 font-bold">Search Schools</h2>
+        <div>
+          <input type="text" id="search_input"
+            class="search-input"
+            aria-label="Search by Name or Constituency" placeholder="Search by Name or Constituency" disabled>
+        </div>
+        <div id="search_results_container">
+         {{- /* search results appear here */}}
+        </div>
+        <ul class="list-footer notice">
+          <li>Title: Kenya - Schools</li>
+          <li>Author: Kenya Ministry of Education</li>
+          <li>Source: <a class="underline" href="https://energydata.info/dataset/kenya-schools">World Bank</a></li>
+          <li>License: <a class="underline" href="https://creativecommons.org/licenses/by/4.0/">CC By 4.0</a></li>
+        </ul>
+    </article>
+  </div>
+</main>

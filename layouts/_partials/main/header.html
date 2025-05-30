@@ -1,0 +1,56 @@
+<header>
+  <nav id="main-nav" class="main-nav" aria-label="Main Menu">
+    <div class="inside-nav">
+      <ul class="nav-left">
+        {{- $currentPage := . }}
+        {{- range site.Menus.left }}
+          {{- if $currentPage.IsMenuCurrent .Menu . }}
+          <li class="nav-item">
+            <a class="active" aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+          {{- else if $currentPage.HasMenuCurrent .Menu . }}
+          <li class="nav-item">
+            <a class="active" aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+          {{- else }}
+          <li class="nav-item">
+            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+          </li>
+          {{- end }}
+        {{- end }}
+      </ul>
+      <div class="site-title">
+        {{- if .IsHome }}
+        <h1>
+          <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+        </h1>
+        {{- else }}
+        <div>
+          <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+        </div>
+        {{- end}}
+        <button id="main-toggle" aria-label="Toggle Menu" class="main-toggle" aria-expanded="false">
+          <svg class="site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#hamburger"></use></svg><span class="menu-label">Menu</span>
+        </button>
+      </div>
+      <ul class="nav-right">
+        {{- $currentPage := . }}
+        {{- range site.Menus.right }}
+          {{- if $currentPage.IsMenuCurrent .Menu . }}
+          <li class="nav-item">
+            <a class="active" aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+          {{- else if $currentPage.HasMenuCurrent .Menu . }}
+          <li class="nav-item">
+            <a class="active" aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+          {{- else }}
+          <li class="nav-item">
+            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+          </li>
+          {{- end }}
+        {{- end }}
+      </ul>
+    </div>
+  </nav>
+</header>

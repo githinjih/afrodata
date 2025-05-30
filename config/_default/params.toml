@@ -1,0 +1,30 @@
+# site description
+description = "AfroData is a website that showcases data from various fields in Kenya to facilitate public awareness and education."
+# Add favicon as a Base-64 imagge
+favicon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA5FBMVEUAAAAWovITofENnvEAmfEVqfcUq/kVpPQVofIJnfEQoPIFnPIAmPEAlfEVr/whpvIKHpDO6PcbpPLN1+oVfNXg7vfY7PfH5fbC4vau3PaGzPV1xvRWuvNRuPNKtvNDs/M6sPIWne5ab7lFXLA5U6wJKJgEFYsAEIkKo/ae1fWV0vWKzfRqwfTm6vLe5fEWoPDY4u9dtO0XmOoAkOoHkOhGo+VFm+HFw92mt9yUpNIYdM4JbcyKk8d3jMcWXr5leb1gdrwXVrYVTLAQSK8IP6k2SKQYOaEeNJsUMJsVKJQAIJQDGY6NstSIAAAAAXRSTlMAQObYZgAAAQNJREFUOMutkNdywjAURK+KsYobxiGUACEF0nvvvcD//w8zjLAwkswL53WPdvYKVkm11a270y6llHPszGOOGUOIxPsHR512c80QAoamCCk54ZKGG8W8Q1ARFhZKbiRahLdB833lGwImOq8NL0wB0XUtjB88UyBzM3d/IlPAVAvPSWapEGmvV59V/Pc9H4uKt7AzrCrhbJQ8XqbXXy+VghDonXD/dAsAyfucgfP3mrtBPz+YBQ0w+fvI75EtsHAyyFQFFmBlBzwlxHZhC9RM4RBeZwLZXNJAD+3CttpAUigdiSk4eINo+klNl1Abnvp6oXXEZ4RwACUk2V7YKBOOf89htUwAJ5wRDumYRaEAAAAASUVORK5CYII="
+
+# Meta info
+charset                          = "UTF-8"
+viewport                         = "width=device-width, initial-scale=1.0"
+locale                           = "en_KE"
+color                            = "#1A2BE1"
+website                          = "website"
+robots                           = "max-snippet:320,max-image-preview:large"
+
+# Skip accessibility
+aria                             = 'aria-hidden="true"'
+
+# author params
+[author]
+  name                           = "Gĩthĩnji"
+  description                    = "Gĩthĩnji is passionate about politics, governance, public finance management and cycling."
+
+# Links to social media pages/ SEO (open graph etc)
+
+# Links to site icons/thumbnail
+[icons]
+  appleicon                    = "icons/apple-touch-icon.png"
+
+[counterscale]
+  siteID = "afrodata"
+  url = "https://counterscale.afrocave.workers.dev/tracker.js"

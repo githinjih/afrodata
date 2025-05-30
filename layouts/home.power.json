@@ -1,0 +1,18 @@
+{{- $list := slice -}}
+
+{{- $pages := where site.RegularPages "Section" "power" -}}
+
+{{- range $pages -}}
+
+{{- $item := dict
+"title" .Title
+"Type" .Params.Type
+"Capacity (MW)" .Params.Capacity
+"Status" .Params.Status
+"url" .Path
+-}}
+
+{{- $list = $list | append $item -}}
+{{- end -}}
+
+{{- $list | jsonify -}}

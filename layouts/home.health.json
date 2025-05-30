@@ -1,0 +1,17 @@
+{{- $list := slice -}}
+
+{{- $pages := where site.RegularPages "Section" "health" -}}
+
+{{- range $pages -}}
+
+{{- $item := dict
+"title" .Title
+"County" .Params.County
+"Constituency" .Params.Sub_County
+"url" .Path
+-}}
+
+{{- $list = $list | append $item -}}
+{{- end -}}
+
+{{- $list | jsonify -}}

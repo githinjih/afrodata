@@ -1,0 +1,33 @@
+{{- $data := "" }}
+{{- $URL := "data/kenya.geojson" }}
+{{ with try (resources.Get $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = .Content | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get resource %q" $URL }}
+{{- end -}}
+
+{{- range where $data.features "properties.CONSTITUEN" "ne" nil }}
+  {{- with .properties }}
+    {{- /* Add page. */}}
+    {{- $content := dict "mediaType" "text/markdown" }}
+    {{- $filename := printf "%s" (urlize .CONSTITUEN) -}}
+    {{- $params := dict 
+      "Name" (trim .CONSTITUEN " ")
+      "County" (trim .COUNTY_NAM " ")
+      "Constituency Code" (trim .CONST_CODE " ")
+      "County Code" (trim .COUNTY_COD " ")
+    }}
+    {{- $page := dict
+      "content" $content
+      "kind" "page"
+      "title" (.CONSTITUEN | lower | title)
+      "params" $params
+      "path" $filename
+    }}
+    {{ $.AddPage $page }}
+  {{- end }}
+{{ end }}

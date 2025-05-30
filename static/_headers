@@ -1,0 +1,11 @@
+https://afrocave.pages.dev/*
+  X-Robots-Tag: noindex
+  Link: https://blog.afro.co.ke./:splat; rel="canonical"
+  Refresh: 0; url=https://blog.afro.co.ke/:splat 
+  
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options : nosniff
+  Referrer-Policy : strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self), payment=(), usb=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://counterscale.afrocave.workers.dev; object-src 'none'; connect-src 'self' https://counterscale.afrocave.workers.dev; img-src 'self' data: ; frame-ancestors 'none'; style-src 'self'; form-action 'self' https://formspree.io;

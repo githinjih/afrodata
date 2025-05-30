@@ -1,0 +1,39 @@
+{{- $data := "" }}
+{{- $URL := "https://energydata.info/dataset/9a215d6f-7dce-410e-86ba-80ca8aafd250/resource/cdfb189c-ec0a-41c9-9fec-57401b2c7d29/download/power_stations.json" }}
+{{ with try (resources.GetRemote $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = . | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get remote resource %q" $URL }}
+{{- end -}}
+
+{{- range $data.features }}
+  {{- with .properties }}
+    {{- /* Add page. */}}
+    {{- $content := dict "mediaType" "text/markdown" }}
+    {{- $filename := printf "%s" (urlize .Name) }} 
+    {{- if in $filename ".." }}
+     {{- $filename = replace $filename ".." "-" }}
+    {{- end }} 
+    {{- $params := dict 
+      "Name" (trim .Name " ")
+      "Type" (trim .Type " ")
+      "Capacity" (trim .Capacity_M " ")
+      "Status" (trim .Status " ")
+      "Coordinate" (trim .Coordinate " ")
+      "Longitude" (trim .X_Coord " ")
+      "Latitude" (trim .Y_Coord " ")
+    }}
+    {{- $page := dict
+      "content" $content
+      "kind" "page"
+      "title" .Name
+      "params" $params
+      "path" $filename
+    }}
+    {{ $.AddPage $page }}
+  {{- end }}
+{{ end }}

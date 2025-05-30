@@ -1,0 +1,16 @@
+{{/* PUT IT AT VERY TOP OF THE PARTIAL */}}
+{{- $lazyLoading := default true .LazyLoading }}
+{{- $fetchPriority:= default "" .FetchPriority -}}
+
+{{- with .Resources.GetMatch "cover.*" }}
+  {{- $webPS := .Process (printf "fill %dx%d webp TopLeft" (div .Width 3.0848 | int ) (div .Height 1.6143 | int ) ) }}
+  {{- $webPM := .Process (printf "fill %dx%d webp TopLeft" (div .Width 2.5 | int) (div .Height 1.3083 | int ) ) }}
+  <div class="list-article-image transition">
+    <div class="list-article-image-inner">
+      <picture>
+        <source media="(min-width:400px)" srcset="{{ $webPM.RelPermalink }}" type="{{ $webPM.MediaType.Type }}"  width="{{ $webPM.Width }}" height="{{ $webPM.Height }}">
+        <img src="{{ $webPS.RelPermalink }}" class="transition" width="{{ $webPS.Width }}" height="{{ $webPS.Height }}" alt="" {{- with $fetchPriority }} fetchpriority="{{ . }}" {{- end }} {{- if $lazyLoading }} loading="lazy" {{- end }}>
+      </picture>
+    </div>
+  </div>
+{{- end }}

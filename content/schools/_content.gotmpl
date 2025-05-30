@@ -1,0 +1,46 @@
+{{- $data := "" }}
+{{- $URL := "https://energydata.info/dataset/2fda191d-c3c6-4002-8c82-daa02008a9e3/resource/129b8c79-de8b-4b7b-8310-cdd207e46863/download/schools.json" }}
+{{ with try (resources.GetRemote $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = . | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get remote resource %q" $URL }}
+{{- end -}}
+
+{{- range $data.features }}
+  {{- with .properties }}
+    {{- /* Add page. */}}
+    {{- $content := dict "mediaType" "text/markdown" }}
+    {{- $filename := printf "%s" (urlize .SCHOOL_NAM) }} 
+    {{ if in $filename ".." }}
+     {{- $filename = replace $filename ".." "-" }}
+     {{ else if in $filename "." }}
+     {{- $filename = replace $filename "." "-" }}
+    {{- end }} 
+    {{- $params := dict 
+      "Name" (trim .SCHOOL_NAM " " | lower | title)
+      "Level" (trim .LEVEL " ")
+      "Code" (trim .CODE " ")
+      "County" (trim .County " ")
+      "Constituency" (trim .SUB_COUNTY " ")
+      "District" (trim .DISTRICT " ")
+      "Zone" (trim .ZONE " ")
+      "Ward" (trim .Ward " ")
+      "Status" (trim .Status " ")
+      "Longitude" (trim .X_Coord " ")
+      "Latitude" (trim .Y_Coord " ")
+      "Source" (trim .Source " ")
+    }}
+    {{- $page := dict
+      "content" $content
+      "kind" "page"
+      "title" (trim .SCHOOL_NAM " " | lower | title)
+      "params" $params
+      "path" $filename
+    }}
+    {{ $.AddPage $page }}
+  {{- end }}
+{{ end }}

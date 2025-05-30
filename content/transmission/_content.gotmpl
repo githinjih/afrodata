@@ -1,0 +1,37 @@
+{{- $data := "" }}
+{{- $URL := "https://energydata.info/dataset/d163a91c-b626-46c2-9fd3-c51df551a844/resource/ca7d5c9e-cd69-49cd-8989-7791a160784e/download/transmission_stations.json" }}
+{{ with try (resources.GetRemote $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = . | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get remote resource %q" $URL }}
+{{- end -}}
+
+{{- range $data.features }}
+  {{- with .properties }}
+    {{- if and .Name_IMS11 (ne .Name_IMS11 " ") (ne .Name_IMS11 "") }}
+      {{- $content := dict "mediaType" "text/markdown" }}
+      {{- /* Add page. */}}
+      {{- $params := dict 
+        "Name" (trim .Name_IMS11 " ")
+        "RCC1" (trim .RCC1 " " )
+        "County" (trim .County2 " ")
+        "Branch" (trim .Branch3 " ")
+        "Ownership" (trim .Ownershi23 " ")
+        "Street" (trim .Street40 " ")
+        "Access Type" (trim .Type_Acc42 " ")
+      }}
+      {{- $page := dict
+        "content" $content
+        "kind" "page"
+        "title" .Name_IMS11
+        "params" $params
+        "path" (printf "%s-%s" (string .OBJECTID) (.Name_IMS11 | replaceRE `[\./]` "-" | urlize))
+      }}
+      {{ $.AddPage $page }}
+    {{- end }}
+  {{- end }}
+{{ end }}

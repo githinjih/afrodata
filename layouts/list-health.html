@@ -1,0 +1,30 @@
+<main id="main">
+  <div class="page-header-wrapper">
+    <div class="page-header">
+      <div class="section-title">
+        <span>{{ .LinkTitle }}</span>
+      </div>
+      <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+  </div>
+  <div class="page-article-wrapper">
+    <article class="page-article">
+      <p>A list with all health facilities and community units in Kenya. Each health facility and community unit is identified with its details describing the geographical location, administrative location, ownership, type and the services offered.</p>
+        <h2 class="text-xl mb-4 font-bold">Search Healthcare Facility</h2>
+        <div>
+          <input type="text" id="search_input"
+            class="search-input"
+            aria-label="Search by Name or Constituency" placeholder="Search by Name or Constituency" disabled>
+        </div>
+        <div id="search_results_container">
+         {{- /* search results appear here */}}
+        </div>
+        <ul class="list-footer notice">
+          <li>Title: Kenya - Healthcare Facilities</li>
+          <li>Author: Government of Kenya</li>
+          <li>Source: <a class="underline" href="https://energydata.info/dataset/kenya-healthcare-facilities">World Bank</a></li>
+          <li>License: <a class="underline" href="https://creativecommons.org/licenses/by/4.0/">CC By 4.0</a></li>
+        </ul>
+    </article>
+  </div>
+</main>

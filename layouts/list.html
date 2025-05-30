@@ -1,0 +1,13 @@
+{{ define "main" }}
+  {{- if eq .Section "health" }}
+    {{- .Render "list-health" }}
+  {{- else if eq .Section "schools" }}
+    {{- .Render "list-schools" }}
+  {{- else if eq .Section "power" }}
+    {{- .Render "list-power" }}
+  {{- else if eq .Section "transmission" }}
+    {{- .Render "list-transmission"}}
+    {{- else if eq .Section "constituencies" }}
+    {{- .Render "list-constituencies" }}
+  {{- end }}
+{{- end }}

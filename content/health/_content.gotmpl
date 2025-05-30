@@ -1,0 +1,40 @@
+{{- $data := "" }}
+{{- $URL := "https://energydata.info/dataset/7e456b65-1c58-4031-9a91-397787c1334c/resource/cca57586-9600-4736-8287-35f32d59071f/download/healthcare_facilities.json" }}
+{{ with try (resources.GetRemote $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = . | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get remote resource %q" $URL }}
+{{- end -}}
+
+{{- range $data.features }}
+  {{- with .properties }}
+    {{- /* Add page. */}}
+    {{- $content := dict "mediaType" "text/markdown" }}
+    {{- $params := dict 
+      "Facility Name" (trim .Facility_N " ")
+      "Type" (trim .Type " ")
+      "Owner" (trim .Owner " ")
+      "County" (trim .County " ")
+      "Sub_County" (trim .Sub_County " ")
+      "Division" (trim .Division " ")
+      "Location" (trim .Location " ")
+      "Sub_Location" (trim .Sub_Locati " ")
+      "Constituency" (trim .Constituen " ")
+      "Nearest To" (trim .Nearest_To " ")
+      "Latitude" (trim .Latitude " ")
+      "Longitude" (trim .Longitude " ")
+    }}
+    {{- $page := dict
+      "content" $content
+      "kind" "page"
+      "title" .Facility_N
+      "params" $params
+      "path" (printf "%s" (urlize .Facility_N))
+    }}
+    {{ $.AddPage $page }}
+  {{- end }}
+{{ end }}

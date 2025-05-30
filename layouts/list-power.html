@@ -1,0 +1,30 @@
+<main id="main">
+  <div class="page-header-wrapper">
+    <div class="page-header">
+      <div class="section-title">
+        <span>{{ .LinkTitle }}</span>
+      </div>
+      <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+  </div>
+  <div class="page-article-wrapper">
+    <article class="page-article">
+      <p>The dataset contains location of Power Stations in Kenya. It was provided by Kenya Power and Lighting Company (KPLC).</p>
+        <h2 class="text-xl mb-4 font-bold">Search Power Station</h2>
+        <div>
+          <input type="text" id="search_input"
+            class="search-input"
+            aria-label="Search by Name" placeholder="Search by Name" disabled>
+        </div>
+        <div id="search_results_container">
+         {{- /* search results appear here */}}
+        </div>
+        <ul class="list-footer notice">
+          <li>Title: Kenya - Power Stations</li>
+          <li>Author: Kenya Power and Lighting Company (KPLC)</li>
+          <li>Source: <a class="underline" href="https://energydata.info/dataset/kenya-power-stations">World Bank</a></li>
+          <li>License: <a class="underline" href="https://creativecommons.org/licenses/by/4.0/">CC By 4.0</a></li>
+        </ul>
+    </article>
+  </div>
+</main>
