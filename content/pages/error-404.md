@@ -14,7 +14,4 @@ You are unable to visit this page because of:
 * a mistyped address; or
 * a search engine/social media that has an out-of-date listing for this site.
 
-You may wish to search the site or--
-
-[Visit the Homepage](/)
-{.button .sec}
+You may wish to search the site or [visit the Homepage](/).
