@@ -4,21 +4,17 @@
   {{- end -}}
   
   {{- $scripts := resources.Get "js/scripts.js" | minify | fingerprint }}
-  {{- $img := resources.Get "image/thumbnail.jpg" -}}
-  {{- if .IsPage }}
-    {{- $img = .FirstSection.Resources.GetMatch "cover.*"}}
-  {{- end }}
-  {{- $logo := resources.Get "image/afrocave-logo.png" -}}
+  {{- $img := resources.GetMatch "image/thumbnail.*" -}}
+  {{- $logo := resources.GetMatch "image/logo.*" -}}
 
   {{- if or (.IsHome) (eq .Page.Kind "404") (and (.IsPage) (ne .Section "pages")) }}
   <script src="{{ $scripts.RelPermalink }}" integrity="{{ $scripts.Data.Integrity }}" defer></script>
-  {{- end -}}
+  {{ end }}
 
   {{- if eq .Section "pages" -}}
-    {{- if eq .Params.id "contact" }}
-    {{- $umbrella := resources.Get "js/contact/umbrella.js" }}
-    {{- $contact := resources.Get "js/contact/contact.js" }}
-    {{- $contactJS := slice $umbrella $contact $scripts | resources.Concat "/js/contact.js" | minify | fingerprint }}
+    {{- if site.GetPage "/pages/contact" }}
+    {{- $contact := resources.Get "js/contact.js" }}
+    {{- $contactJS := slice $contact $scripts | resources.Concat "/js/contact.js" | minify | fingerprint }}
     <script src="{{ $contactJS.RelPermalink }}" integrity="{{ $contactJS.Data.Integrity }}" defer></script>
     {{ else }}
     <script src="{{ $scripts.RelPermalink }}" integrity="{{ $scripts.Data.Integrity }}" defer></script>
@@ -26,16 +22,148 @@
   {{- end }}
 
   {{- if .IsHome }}
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","name":"{{ site.Title }}","url":{{ "/" | absLangURL }},"description":"{{ site.Title }} {{ site.Params.description }}","thumbnailUrl":{{ $logo.Permalink  }},"license":"{{ replace (replace site.Copyright "{year}" (now.Format "2006")) "{title}" site.Title }}"}</script>
+    {{- $item := dict  
+      "@context" "https://schema.org"
+      "@type" "Website"
+      "name" site.Title
+      "url" site.Home.Permalink
+      "description" site.Params.description
+      "image" (dict
+        "@type" "ImageObject"
+        "url" $logo.Permalink
+        "width" $logo.Width
+        "height" $logo.Height
+      )
+      "license" (replace (replace site.Copyright "{year}" (now.Format "2006")) "{title}" site.Title)
+    -}}
+    <script type="application/ld+json">
+    {{ jsonify (dict "indent" "") $item | safeJS }}
+    </script>
+
   {{- else if .IsSection }}
-    <script type="application/ld+json">{"@context": "https://schema.org","@type":"BreadcrumbList","itemListElement": [{"@type":"ListItem","position":1,"item":{"@id": {{ site.Home.Permalink }},"name":"{{ site.Title }}"}},{"@type":"ListItem","position":2,"item":{"@id": {{ .FirstSection.Permalink }},"name":"{{ .FirstSection.LinkTitle }}"}}]}</script>
+    {{- $item := dict
+      "@context" "https://schema.org"
+      "@type" "BreadcrumbList"
+      "itemListElement" (slice
+        (dict
+          "@type" "ListItem"
+          "position" 1
+          "item" (dict
+            "@id" site.Home.Permalink
+            "name" site.Title
+          )
+        )
+        (dict
+          "@type" "ListItem"
+          "position" 2
+          "item" (dict
+            "@id" .FirstSection.Permalink
+            "name" .FirstSection.LinkTitle
+          )
+        )
+      )
+    -}}
+    <script type="application/ld+json">
+    {{ jsonify (dict "indent" "") $item | safeJS }}
+    </script>
   {{- else if eq .Section "pages" }}
-    <script type="application/ld+json">{"@context": "https://schema.org","@type":"BreadcrumbList","itemListElement": [{"@type":"ListItem","position":1,"item":{"@id": {{ site.Home.Permalink }},"name":"{{ site.Title }}"}},{"@type":"ListItem","position":2,"item":{"@id": {{ .Permalink }},"name":"{{ .Title }}"}}]}</script>
+    {{- $item := dict
+      "@context" "https://schema.org"
+      "@type" "BreadcrumbList"
+      "itemListElement" (slice
+        (dict
+          "@type" "ListItem"
+          "position" 1
+          "item" (dict
+            "@id" site.Home.Permalink
+            "name" site.Title
+          )
+        )
+        (dict
+          "@type" "ListItem"
+          "position" 2
+          "item" (dict
+            "@id" .Permalink
+            "name" .LinkTitle
+          )
+        )
+      )
+    -}}
+    <script type="application/ld+json">
+    {{ jsonify (dict "indent" "") $item | safeJS }}
+    </script>
   {{- end -}}
 
-  {{ if or ( and (.IsPage) (ne .Section "pages")  ) }}
-  <script type="application/ld+json">{"@context":"https://schema.org/","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":{{ .Permalink }}},"headline":"{{ .Title }}","name":"{{ .Title }}","articleSection":"{{ .FirstSection.LinkTitle }}","description":"{{ .FirstSection.Params.description }}","inLanguage":"{{ site.LanguageCode }}",{{- with $img }}"image":{"@type":"ImageObject","url":{{ .Permalink }},"width":"{{ .Width }}","height":"{{ .Height }}"}{{ end }},"author":{"@type":"Person","name":"{{ site.Params.author.name }}","url":"https://afro.co.ke"},"publisher":{"@type":"Organization","name":"{{ site.Title }}","logo":{"@type":"ImageObject","url":{{ $logo.Permalink}},"width":"{{ $logo.Width }}","height":"{{ $logo.Height }}"}},"genre":"{{ .FirstSection.LinkTitle }}","copyrightHolder":"{{ site.Title }}","copyrightYear":"{{ replace site.Copyright "{year}" (now.Format "2006") | safeHTML }}"}</script>
-  <script type="application/ld+json">{"@context": "https://schema.org","@type":"BreadcrumbList","itemListElement": [{"@type":"ListItem","position":1,"item":{"@id": {{ site.Home.Permalink }},"name":"{{ site.Title }}"}},{"@type":"ListItem","position":2,"item":{"@id":{{ .FirstSection.Permalink }},"name":"{{ .FirstSection.LinkTitle }}"}},{"@type":"ListItem","position":3,"item":{"@id":{{ .Permalink }},"name": "{{ .Title }}"}}]}</script>
+  {{ if or (and (.IsPage) (ne .Section "pages")) }}
+    {{- $item := dict
+      "@context" "https://schema.org/"
+      "@type" "BlogPosting"
+      "mainEntityOfPage" (dict 
+        "@type" "WebPage" 
+        "@id" .Permalink
+      )
+      "headline" .Title
+      "name" .Title
+      "articleSection" .FirstSection.LinkTitle
+      "description" .FirstSection.Params.description
+      "inLanguage" site.LanguageCode
+      "author" (dict 
+        "@type" "Person" 
+        "name" site.Params.author.name
+        "url" site.Home.Permalink
+      )
+      "publisher" (dict
+        "@type" "Organization"
+        "name" site.Title
+        "logo" (dict 
+          "@type" "ImageObject"
+          "url" $logo.Permalink
+          "width" $logo.Width
+          "height" $logo.Height
+        )
+      )
+      "genre" .FirstSection.LinkTitle
+      "copyrightHolder" site.Title
+      "copyrightYear" (replace site.Params.copyright.year "{year}" (now.Format "2006") | safeHTML)
+    -}}
+     <script type="application/ld+json">
+    {{ jsonify (dict "indent" "") $item | safeJS }}
+    </script>
+
+  {{- $crumbs := dict
+      "@context" "https://schema.org"
+      "@type" "BreadcrumbList"
+      "itemListElement" (slice
+        (dict
+          "@type" "ListItem"
+          "position" 1
+          "item" (dict
+            "@id" site.Home.Permalink
+            "name" site.Title
+          )
+        )
+        (dict
+          "@type" "ListItem"
+          "position" 2
+          "item" (dict
+            "@id" .FirstSection.Permalink
+            "name" .FirstSection.LinkTitle
+          )
+        )
+        (dict
+          "@type" "ListItem"
+          "position" 3
+          "item" (dict
+            "@id" .Permalink
+            "name" .LinkTitle
+          )
+        )
+      )
+    -}}
+     <script type="application/ld+json">
+    {{ jsonify (dict "indent" "") $crumbs | safeJS }}
+    </script>
+
   {{- end }}
 
   {{- if and (not .IsPage) (.IsSection) }}

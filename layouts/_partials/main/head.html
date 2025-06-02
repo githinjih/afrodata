@@ -55,7 +55,7 @@
   {{- /* sitewide meta */}}
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ site.Title }}">
-  {{- with or (.Resources.GetMatch "cover.*") (resources.Get "image/thumbnail.jpg") }}
+  {{- with resources.GetMatch "image/thumbnail.*" }}
   <meta property="og:image" content="{{ .Permalink }}">
   <meta property="og:image:type" content="{{ .MediaType.Type }}">
   <meta property="og:image:width" content="{{ .Width }}">
