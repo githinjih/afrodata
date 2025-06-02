@@ -28,3 +28,6 @@ aria                             = 'aria-hidden="true"'
 [counterscale]
   siteID = "afrodata"
   url = "https://counterscale.afrocave.workers.dev/tracker.js"
+
+[copyright]
+  year = "{year}"
