@@ -1,7 +1,7 @@
 import Fuse from './fuse.mjs';
 import { Hit, Page } from './types.js';
 
-const JSON_INDEX_URL = `${window.location.origin}/schools.json`;
+const JSON_INDEX_URL = `${window.location.origin}/transmission.json`;
 const QUERY_URL_PARAM = 'query';
 
 const MAX_HITS_SHOWN = 20;
