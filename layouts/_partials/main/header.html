@@ -1,52 +1,52 @@
 <header>
-  <nav id="main-nav" class="main-nav" aria-label="Main Menu">
-    <div class="inside-nav">
-      <ul class="nav-left">
+  <nav id="main-nav" class="main-nav" aria-label="Primary Navigation">
+    <div class="flex flex-wrap justify-between md:flex-nowrap md:gap-5 lg:gap-10">
+      <ul class="order-1 hidden w-full flex-col items-center justify-start md:order-none md:flex md:w-auto md:flex-1 md:flex-row md:justify-end">
         {{- $currentPage := . }}
         {{- range site.Menus.left }}
           {{- if $currentPage.IsMenuCurrent .Menu . }}
-          <li class="nav-item">
-            <a class="active" aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
+          <li class="px-3 py-2 font-bold text-blue-500 dark:text-blue-400">
+            <a aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- else if $currentPage.HasMenuCurrent .Menu . }}
-          <li class="nav-item">
-            <a class="active" aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
+          <li class="px-3 py-2 font-bold text-blue-500 dark:text-blue-400">
+            <a aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- else }}
-          <li class="nav-item">
-            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+          <li class="px-3 py-2 font-medium text-gray-600 hover:text-blue-500 dark:text-gray-400">
+            <a href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- end }}
         {{- end }}
       </ul>
-      <div class="site-title">
+      <div class="flex w-full items-center justify-between md:w-auto">
         {{- if .IsHome }}
         <h1>
-          <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+          <a class="font-cookie w-28 text-4xl font-bold dark:text-gray-300" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
         </h1>
         {{- else }}
         <div>
-          <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+          <a class="font-cookie w-28 text-4xl font-bold dark:text-gray-300" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
         </div>
         {{- end}}
-        <button id="main-toggle" aria-label="Toggle Menu" class="main-toggle" aria-expanded="false">
-          <svg class="site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#hamburger"></use></svg><span class="menu-label">Menu</span>
+        <button id="main-toggle" aria-label="Toggle Menu" class="ml-auto flex rounded-md px-2 py-1 text-gray-700 focus:text-blue-500 focus:outline-hidden md:hidden dark:text-gray-300" aria-expanded="false">
+          <svg class="site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#hamburger"></use></svg><span class="pl-1 pt-0.5">Menu</span>
         </button>
       </div>
-      <ul class="nav-right">
+      <ul class="order-2 hidden w-full flex-col items-center justify-start md:order-none md:flex md:w-auto md:flex-1 md:flex-row">
         {{- $currentPage := . }}
         {{- range site.Menus.right }}
           {{- if $currentPage.IsMenuCurrent .Menu . }}
-          <li class="nav-item">
-            <a class="active" aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
+          <li class="px-3 py-2 font-bold text-blue-500 dark:text-blue-400">
+            <a aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- else if $currentPage.HasMenuCurrent .Menu . }}
-          <li class="nav-item">
-            <a class="active" aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
+          <li class="px-3 py-2 font-bold text-blue-500 dark:text-blue-400">
+            <a aria-current="true" href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- else }}
-          <li class="nav-item">
-            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+          <li class="px-3 py-2 font-medium text-gray-600 hover:text-blue-500 dark:text-gray-400">
+            <a href="{{ .URL }}">{{ .Name }}</a>
           </li>
           {{- end }}
         {{- end }}

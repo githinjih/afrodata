@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.8"
+  },
+  "scripts": {
+    "update": "npx npm-check-updates -u && npm update",
+    "rebase": "git pull --rebase origin main"
+  }
+}

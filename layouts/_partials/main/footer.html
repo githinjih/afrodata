@@ -1,33 +1,31 @@
 {{- $aria := site.Params.aria | safeHTMLAttr -}}
-<footer class="footer">
-   <nav id="footer-nav" class="footer-nav" aria-label="Footer Menu">
-      <button id="footer-toggle" aria-label="Toggle Menu" class="footer-toggle" aria-expanded="false">
-         <svg class="site-icon" {{ $aria }} width="1em" height="1em"><use xlink:href="#hamburger"></use></svg><span class="menu-label">Menu</span>
+<footer class="mx-auto mt-10 flex w-full max-w-(--breakpoint-xl) flex-col items-center border-t-2 border-gray-200 p-8 dark:border-gray-800">
+   <nav id="footer-nav" class="footer-nav mb-2" aria-label="Footer Menu">
+      <button id="footer-toggle" aria-label="Toggle Menu" class="flex pb-4 sm:hidden" aria-expanded="false">
+         <svg class="site-icon" {{ $aria }} width="1em" height="1em"><use xlink:href="#hamburger"></use></svg><span class="pl-1 pt-0.5">Menu</span>
       </button>
-      <ul>
+      <ul class="z-40 hidden w-full flex-col items-center justify-center pb-4 sm:flex sm:flex-row sm:pb-2">
          {{- $currentPage := . }}
          {{- range site.Menus.footer }}
             {{- if $currentPage.IsMenuCurrent .Menu . }}
-            <li>
+            <li class="px-5 py-2 font-bold text-blue-500 dark:text-blue-400">
                <a class="active" aria-current="page" href="{{ .URL }}">{{ .Name }}</a>
             </li>
             {{ else }}
-            <li>
+            <li class="px-5 py-2 hover:text-blue-500 dark:hover:text-blue-400">
                <a href="{{ .URL }}" class="menu-link">{{ .Name }}</a>
             </li>
             {{- end }}
          {{- end}}
       </ul>
-      {{- $aria := site.Params.aria | safeHTMLAttr }}
    </nav>
-   <div class="copyright">&copy; {{ replace (replace site.Copyright "{year}" (now.Format "2006")) "{title}" site.Title }}</div>
-   <p class="license">License: <a href="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noreferrer">CC By 4.0</a></p>
-   <div class="theme-wrapper">
+   <div class="font-cookie text-xl opacity-75">&copy; {{ replace (replace site.Copyright "{year}" (now.Format "2006")) "{title}" site.Title }}</div>
+   <div class="flex items-center justify-center mt-4">
       <div id="color-scheme-switch">
-         <span class="theme-inner">
+         <span class="inline-flex items-center">
          <svg class="site-icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" {{ $aria }}><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-         <label for="themeSwitch" class="sr-only">Change the Theme</label>
-         <select name="themeSwitch" id="themeSwitch" class="theme-toggle">
+         <label for="themeSwitch" class="sr-only">Toggle Theme</label>
+         <select name="themeSwitch" id="themeSwitch" class="p-1 bg-gray-100 cursor-pointer dark:bg-gray-900">
          <option value="system">System</option>
          <option value="dark">Dark</option>
          <option value="light">Light</option>

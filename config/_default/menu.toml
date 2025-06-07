@@ -33,12 +33,7 @@
   weight = 10
 
 [[footer]]
-  name = "Terms"
-  pageRef = "/pages/terms"
-  weight = 20
-
-[[footer]]
   name = "Contact"
   pageRef = "/pages/contact"
-  weight = 30
+  weight = 20
 

@@ -1,0 +1,26 @@
+{{ define "main" }}
+<main id="main">
+  <header class="mt-10 max-w-3xl mx-auto">
+    <h2 class="text-center text-3xl font-semibold tracking-tight lg:text-4xl lg:leading-snug">Hey There! 👋</h2>
+    <p class="text-center py-4 md:text-lg"><span class="font-sans-bold">{{ site.Title }}</span> is a website that showcases data from
+      various sectors in Kenya to facilitate public awareness and education.</p>
+    <p class="text-center py-4 md:text-lg">We share the data below which we hope you are going to love.</p>
+  </header>
+  <section class="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+    {{- /* The paginated page collection. */}}
+    {{ range .Sections }}
+    <article class="group cursor-pointer">
+      <a href="{{ .RelPermalink }}">
+        {{- partial "home/image.html" (dict "Resources" .Resources "LazyLoading" true) }}
+        <div class="flex gap-3 mt-5 text-sm font-medium tracking-wider text-blue-600 uppercase dark:text-blue-400">
+          <span>{{ .LinkTitle }}</span>
+        </div>
+        <h2 class="mt-2 text-lg leading-snug font-semibold tracking-tight dark:text-gray-300">
+          <span class="bg-linear-to-r from-blue-200 to-blue-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_10px] hover:bg-[length:100%_3px] dark:from-blue-800 dark:to-blue-900">{{ .Title }}</span>
+        </h2>
+      </a>
+    </article>
+    {{- end }}
+  </section>
+</main>
+{{ end }}

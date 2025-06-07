@@ -3,13 +3,16 @@
 {{- $fetchPriority:= default "" .FetchPriority -}}
 
 {{- with .Resources.GetMatch "cover.*" }}
-  {{- $webPS := .Process (printf "fill %dx%d webp TopLeft" (div .Width 3.0848 | int ) (div .Height 1.6143 | int ) ) }}
-  {{- $webPM := .Process (printf "fill %dx%d webp TopLeft" (div .Width 2.5 | int) (div .Height 1.3083 | int ) ) }}
-  <div class="list-article-image transition">
-    <div class="list-article-image-inner">
+  {{- $webPS := .Process "fill 350x350 webp TopLeft" }}
+  {{- $webPM := .Process "fill 480x480 webp TopLeft" }}
+  {{- $webPL := .Process "fill 628x628 webp TopLeft" }}
+
+  <div class="overflow-hidden rounded-md bg-gray-100 transition-all hover:scale-105 dark:bg-gray-800">
+    <div class="relative block aspect-square">
       <picture>
-        <source media="(min-width:400px)" srcset="{{ $webPM.RelPermalink }}" type="{{ $webPM.MediaType.Type }}"  width="{{ $webPM.Width }}" height="{{ $webPM.Height }}">
-        <img src="{{ $webPS.RelPermalink }}" class="transition" width="{{ $webPS.Width }}" height="{{ $webPS.Height }}" alt="" {{- with $fetchPriority }} fetchpriority="{{ . }}" {{- end }} {{- if $lazyLoading }} loading="lazy" {{- end }}>
+        <source media="(min-width:1024px)" srcset="{{ $webPS.RelPermalink }}" type="{{ $webPS.MediaType.Type }}"  width="{{ $webPS.Width }}" height="{{ $webPM.Height }}">
+        <source media="(min-width:640px)" srcset="{{ $webPM.RelPermalink }}" type="{{ $webPM.MediaType.Type }}"  width="{{ $webPM.Width }}" height="{{ $webPM.Height }}">
+        <img src="{{ $webPL.RelPermalink }}" class="object-cover transition-all" width="{{ $webPL.Width }}" height="{{ $webPL.Height }}" alt="" {{- with $fetchPriority }} fetchpriority="{{ . }}" {{- end }} {{- if $lazyLoading }} loading="lazy" {{- end }}>
       </picture>
     </div>
   </div>

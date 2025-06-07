@@ -1,40 +1,23 @@
-import Fuse from './fuse.js';
-import {Hit, Page} from './types.js';
-
-/* ======================================
-* Main search
-* =============================== */
+import Fuse from './fuse.mjs';
+import { Hit, Page } from './types.js';
 
 const JSON_INDEX_URL = `${window.location.origin}/constituencies.json`;
 const QUERY_URL_PARAM = 'query';
 
-/**
- * TEMPLATE_TODO: Optioal. Change how many hits are shown.
- */
-const MAX_HITS_SHOWN = 100;
+const MAX_HITS_SHOWN = 20;
+const LEFT_SIDE_MATCH_HTML = '<mark>';
+const RIGHT_SIDE_MATCH_HTML = '</mark>';
 
-/**
- * TEMPLATE_TODO: Optioal. Change the style of a highlighted match.
- */
-const LEFT_SIDE_MATCH_HTML = '<span class="font-extrabold">';
-const RIGHT_SIDE_MATCH_HTML = '</span>';
-
-/**
- * TEMPLATE_TODO: Required. Tell Fuse.js which keys to search on.
- */
 const FUSE_OPTIONS = {
-  keys: ['title','County'],
+  keys: ['title', 'County'],
   ignoreLocation: true,
   includeMatches: true,
-  minMatchCharLength: 2
+  minMatchCharLength: 3,
 };
 
 let fuse: any;
 
 const getInputEl = (): HTMLInputElement => {
-  /**
-   * TEMPLATE_TODO: Optional. If your HTML input element has a different selector, change it.
-   */
   return document.querySelector('#search_input');
 };
 
@@ -55,11 +38,39 @@ const doSearchIfUrlParamExists = (): void => {
   }
 };
 
-const setUrlParam = (query: string): void => {
-  const urlParams = new URLSearchParams(window.location.search);
-  urlParams.set(QUERY_URL_PARAM, encodeURIComponent(query));
-  window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+const encodeRFC3986URIComponent = (str: string): string => {
+  return encodeURIComponent(str).replace(/[!'()*]/g, c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
 };
+
+const setUrlParam = (query: string): void => {
+  const url = new URL(location.origin + location.pathname);
+  url.search = `${QUERY_URL_PARAM}=${encodeRFC3986URIComponent(query)}`;
+  window.history.replaceState({}, '', url);
+};
+
+const clearSearchInput = (): void => {
+  const inputElement = getInputEl();
+  inputElement.value = '';  // Clear the input field
+  handleSearchEvent();      // Trigger a search event to reset the results
+  toggleClearButton();      // Hide the clear button when input is cleared
+};
+
+const toggleClearButton = (): void => {
+  const inputElement = getInputEl();
+  const clearButton = document.querySelector('#clear_search_btn');
+  // Check if the input field has text
+  if (inputElement.value.trim() !== '') {
+    clearButton.style.display = 'inline-block'; // Show the clear button
+  } else {
+    clearButton.style.display = 'none'; // Hide the clear button
+  }
+};
+
+// Listen to the input event to toggle the visibility of the clear button
+getInputEl().addEventListener('input', toggleClearButton);
+
+// Add event listener for the clear search button
+document.querySelector('#clear_search_btn').addEventListener('click', clearSearchInput);
 
 const fetchJsonIndex = (): void => {
   fetch(JSON_INDEX_URL)
@@ -80,20 +91,14 @@ const fetchJsonIndex = (): void => {
 const highlightMatches = (hit: Hit, key: string) => {
   const text: string = hit.item[key];
   const match = hit.matches.find(match => match.key === key);
-
-  if (!match) {
-    return text;
-  }
+  if (!match) return text;
 
   const charIndexToReplacementText = new Map<number, string>();
-
   match.indices.forEach(indexPair => {
     const startIndex = indexPair[0];
     const endIndex = indexPair[1];
-
     const startCharText = `${LEFT_SIDE_MATCH_HTML}${text[startIndex]}`;
     const endCharText = `${text[endIndex]}${RIGHT_SIDE_MATCH_HTML}`;
-
     charIndexToReplacementText.set(startIndex, startCharText);
     charIndexToReplacementText.set(endIndex, endCharText);
   });
@@ -104,40 +109,29 @@ const highlightMatches = (hit: Hit, key: string) => {
     .join('');
 };
 
-/**
- * TEMPLATE_TODO: Required. Change how your HTML is created.
- */
+
 const createHitHtml = (hit: Hit): string => {
   const details = Object.keys(hit.item)
-    .filter(key => {
-      return key !== 'title' && key !== 'url';
-    })
+    .filter(key => key !== 'title' && key !== 'url' && key !== 'image')
     .map(key => {
-      return `\
-    <span class="font-medium">${key}:</span> ${highlightMatches(hit, key)}<br>
-    `;
+      return `${key}: ${highlightMatches(hit, key)}<br>`;
     })
     .join('\n');
 
-    return `\
-      <ul class="search-results list-style-none">
-        <li class="search-result">
-          <div class="search-result-inner">
-            <p class="search-result-title group"><a class="search-result-link" href="${hit.item.url}"><span class="link-gradient">${highlightMatches(hit, 'title')}</span></a></p>
-            <p class="search-result-excerpt"> ${details}</p>
-          </div>
-        </li>
-      </ul>
-    `
-  ;
+  return `
+   <a href="${hit.item.url}" class="no-underline flex items-start gap-5 py-5 border-b-2 border-gray-300 dark:border-gray-800">
+    <div class="flex flex-(--flex-even) flex-col items-start">
+      <span class="mb-2 text-lg tracking-tight leading-none inline-block font-sans-bold underline">${highlightMatches(hit, 'title')}</span>
+      <span class="text-sm tracking-tight opacity-[.95] text-gray-800 dark:text-gray-400">${details}</span>
+    </div>
+  </a>
+  `;
 };
 
 const renderHits = (hits: Hit[]): void => {
   const limitedHits = hits.slice(0, MAX_HITS_SHOWN);
+
   const html = limitedHits.map(createHitHtml).join('\n');
-  /**
-   * TEMPLATE_TODO: Optional. If your HTML results container element has a different selector, change it.
-   */
   document.querySelector('#search_results_container').innerHTML = html;
 };
 
@@ -151,7 +145,6 @@ const getHits = (query: string): Hit[] => {
 };
 
 const handleSearchEvent = (): void => {
-  const startTime = performance.now();
   const query = getQuery();
   const hits = getHits(query);
   setUrlParam(query);

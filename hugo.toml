@@ -6,9 +6,7 @@ timeout                                      = "600s"
 copyright                                    = "{year} {title}"
 pluralizeListTitles                          = false
 enableRobotsTXT                              = true
-disableKinds                                 = ["taxonomy","RSS","term"]
-[build]
-  noJSConfigInAssets                         = true
+disableKinds                                 = ["taxonomy","rss","term"]
 [outputs]
   home = ["HTML","HEALTH","SCHOOLS","POWER","TRANSMISSION","CONSTITUENCIES"]
  [outputFormats]
@@ -45,6 +43,10 @@ disableKinds                                 = ["taxonomy","RSS","term"]
   [markup.goldmark.parser]
     [markup.goldmark.parser.attribute]
       block                                = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.extras]
+        [markup.goldmark.extensions.extras.superscript]
+          enable                            = true
 [caches]
   [caches.getresource]
     dir                                    = ':resourceDir'
@@ -57,3 +59,21 @@ disableKinds                                 = ["taxonomy","RSS","term"]
     maxAge                                 = -1
 [image]
   quality                                  = 100
+[build]
+  noJSConfigInAssets                         = true
+  [build.buildStats]
+    enable = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
