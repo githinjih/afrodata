@@ -52,7 +52,7 @@ disableKinds                                 = ["taxonomy","rss","term"]
     dir                                    = ':resourceDir'
     maxAge                                 = "720h"
   [caches.images]
-    dir                                    = ':cacheDir/images'
+    dir                                    = ':resourceDir/_gen'
     maxAge                                 = "1440h"
   [caches.assets]
     dir                                    = ':resourceDir/_gen'
@@ -60,7 +60,7 @@ disableKinds                                 = ["taxonomy","rss","term"]
 [image]
   quality                                  = 100
 [build]
-  noJSConfigInAssets                         = true
+  noJSConfigInAssets                       = true
   [build.buildStats]
     enable = true
   [[build.cachebusters]]
