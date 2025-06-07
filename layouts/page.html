@@ -13,7 +13,7 @@
     <div class="mx-auto max-w-(--breakpoint-md) py-5 lg:py-8">
       <header class="flex flex-col justify-center">
         <div class="flex gap-3 justify-center">
-          <div class="mt-5 inline-block text-sm text-center font-medium tracking-wider text-blue-600 uppercase dark:text-blue-400">{{ with .Parent }}{{ .Title }}{{ else }}{{ .Title }}{{ end }}</div>
+          <div class="mt-5 inline-block text-sm text-center font-medium tracking-wider text-blue-600 uppercase dark:text-blue-400">{{ with .Parent }}{{ .LinkTitle }}{{ else }}{{ .Title }}{{ end }}</div>
         </div>
         <h1 class="mt-2 mb-3 text-center text-3xl font-semibold tracking-tight lg:text-4xl lg:leading-snug dark:text-gray-300">{{ $pageTitle }}</h1>
       </header>
