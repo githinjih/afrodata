@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{- partial "main/head.html" . -}}
     {{- with (templates.Defer (dict "key" "global")) }}
-      {{- partialCached "main/assets/css.html" . }}
+      {{- with resources.Get "css/main.css" }}
+        {{- $opts := dict "minify" (not hugo.IsDevelopment) }}
+        {{- with . | css.TailwindCSS $opts }}
+          {{- if hugo.IsDevelopment }}
+            <link rel="stylesheet" href="{{ .RelPermalink }}">
+          {{- else }}
+            {{- with . | fingerprint }}
+              <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+            {{- end }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
     {{- end }}
     {{- partialCached "main/assets/theme.html" . }}
   </head>
   <body class="text-gray-800 antialiased bg-gray-100 dark:bg-gray-950 dark:text-gray-400">
     <a class="sr-only" href="#main">Skip to Content</a>
     <div  class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8">
-      {{ partial "main/header.html" . }}
+      {{ partialCached "main/header.html" . . }}
       {{- block "main" . }}
       <!-- The part of the page that begins to differ between templates -->
       {{- end }}
-      {{- partial "main/footer.html" . }}
+      {{- partialCached "main/footer.html" . . }}
     </div>
     {{ partialCached "main/assets/svg.html" . -}}
     {{- partial "main/assets/foot.html" . }}
