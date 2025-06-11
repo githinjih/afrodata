@@ -175,7 +175,7 @@
       "peer-focus:-translate-y-1/2",
       "peer-focus:bg-gray-100",
       "peer-focus:px-1",
-      "peer-focus:scale-[.8]",
+      "peer-focus:scale-80",
       "peer-focus:text-blue-500",
       "pl-1",
       "pointer-events-none",

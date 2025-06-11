@@ -122,7 +122,7 @@ const createHitHtml = (hit: Hit): string => {
    <a href="${hit.item.url}" class="no-underline flex items-start gap-5 py-5 border-b-2 border-gray-300 dark:border-gray-800">
     <div class="flex flex-(--flex-even) flex-col items-start">
       <span class="mb-2 text-lg tracking-tight leading-none inline-block font-sans-bold underline">${highlightMatches(hit, 'title')}</span>
-      <span class="text-sm tracking-tight opacity-[.95] text-gray-800 dark:text-gray-400">${details}</span>
+      <span class="text-sm tracking-tight opacity-95 text-gray-800 dark:text-gray-400">${details}</span>
     </div>
   </a>
   `;

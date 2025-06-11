@@ -18,7 +18,7 @@
       <div id="search" class="relative flex flex-col">
         <span>
           <input required="" type="text" autocomplete="off" id="{{ $searchInput }}" class="peer w-full rounded-2xl border-2 border-blue-400 bg-transparent p-6 transition focus:border-blue-500 focus:outline-none dark:border-blue-800 dark:focus:border-blue-600" disabled>
-          <label for="{{ $searchInput }}" class="absolute left-6 pointer-events-none text-gray-600 dark:text-gray-400 translate-y-6 transition peer-focus:-translate-y-1/2 peer-focus:scale-[.8] peer-focus:bg-gray-100 peer-focus:px-1 peer-focus:text-blue-500 dark:peer-focus:bg-gray-950 dark:peer-focus:text-blue-400">{{ $searchPlaceholder }}</label>
+          <label for="{{ $searchInput }}" class="absolute left-6 pointer-events-none text-gray-600 dark:text-gray-400 translate-y-6 transition peer-focus:-translate-y-1/2 peer-focus:scale-80 peer-focus:bg-gray-100 peer-focus:px-1 peer-focus:text-blue-500 dark:peer-focus:bg-gray-950 dark:peer-focus:text-blue-400">{{ $searchPlaceholder }}</label>
         </span>
         <button id="{{ $clearBtn }}" class="absolute right-8 p-3 transition-all translate-y-4 duration-300 border border-blue-500 rounded-full dark:border-blue-800 transition duration-300 rotate-90 hover:rotate-180" aria-label="Clear Search Results"><svg class="site-icon" {{ $aria }} width="1em" height="1em"><use xlink:href="#close-icon"></use></svg></button>
         <div id="{{ $searchResults }}" class="whitespace-normal pb-8 pr-3 flex flex-col">
