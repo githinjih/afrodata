@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.8",
+    "@tailwindcss/cli": "^4.1.9",
     "@tailwindcss/typography": "^0.5.16",
-    "tailwindcss": "^4.1.8"
+    "tailwindcss": "^4.1.9"
   },
   "scripts": {
     "update": "npx npm-check-updates -u && npm update",
