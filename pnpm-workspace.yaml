@@ -1,3 +1,6 @@
+packages:
+  - '.' # This means “current root project”
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
