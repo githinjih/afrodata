@@ -1,19 +1,23 @@
 # This cron job periodically updates the scheduled-file-update.txt file in the
-# root of this repository. Each update trigger a Cloudflare Worker build.
+# root of this repository. Each update triggers a Hugo build and GitHub Pages deploy.
 
 name: Scheduled File Update
 
 on:
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+  # Runs every Sunday at 23:00 UTC
   schedule:
     - cron: '0 23 * * 0'
 
 jobs:
-  update-file:
+  update-and-deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: write    # Needed to commit and push changes to the repo
+      actions: write     # Needed to trigger another workflow (Hugo deploy)
 
     steps:
       - name: Checkout repository
@@ -28,11 +32,19 @@ jobs:
 
       - name: Update file with current timestamp
         run: |
-          FILE_TO_UPDATE="scheduled-file-update.txt"
-          echo "$(date '+%Y-%m-%d %H:%M:%S')" > "${FILE_TO_UPDATE}"
+          FILE="scheduled-file-update.txt"
+          echo "$(date '+%Y-%m-%d %H:%M:%S')" > "${FILE}"
 
       - name: Commit and push changes
         run: |
-          git add .
-          git commit -m "Automated: Update ${FILE_TO_UPDATE} via scheduled job"
+          git add scheduled-file-update.txt
+          git commit -m "Automated: Update timestamp (also triggers Hugo deploy)" || echo "No changes to commit"
           git push
+
+      - name: Trigger Hugo Deploy workflow
+        uses: peter-evans/workflow-dispatch@v1
+        with:
+          workflow: hugo.yml  # File name of the Hugo deploy workflow
+          ref: main
+          inputs:
+            from: "cron"      # Pass the trigger source as input
