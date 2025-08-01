@@ -6,7 +6,7 @@
 	},
 	"scripts": {
     "update": "pnpm dlx npm-check-updates -u && pnpm update",
-    "rebase": "git pull --rebase origin main",
+    "rebase": "git pull --rebase --autostash origin main",
     "hugo": "hugo --gc && hugo server"
   }
 }
