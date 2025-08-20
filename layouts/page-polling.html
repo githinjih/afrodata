@@ -1,0 +1,24 @@
+{{ with .Params.wards }}
+    <table>
+      <thead>
+        <tr>
+          <th>Ward Name</th>
+          <th>Polling Stations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ range . }}
+          <tr>
+            <td>{{ .name }}</td>
+            <td>
+              <ul>
+              {{ range $k, $v := .pollingStations }}
+                <li>{{ $v.name -}}</li>
+              {{ end }}
+              </ul>
+            </td>
+          </tr>
+        {{ end }}
+      </tbody>
+    </table>
+  {{ end }}
