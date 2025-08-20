@@ -1,0 +1,30 @@
+{{- $data := "" }}
+{{- $URL := "https://raw.githubusercontent.com/stevehoober254/kenya-county-data/refs/heads/main/county_data.json" }}
+{{ with try (resources.GetRemote $URL) }}
+  {{- with .Err }}
+    {{- errorf "%s" . }}
+   {{ else with .Value }}
+    {{- $data = . | transform.Unmarshal }}
+  {{- end }}
+{{- else }}
+  {{- errorf "Unable to get remote resource %q" $URL }}
+{{- end -}}
+
+{{ range $data }}
+  {{ $countyName := .name }}
+  {{ range .constituencies }}
+    {{ $constituencyName := .name }}
+    {{ $page := dict
+      "content" (dict "mediaType" "text/markdown" "value" "")
+      "kind" "page"
+      "path" (printf "%s" $constituencyName)
+      "params" (dict 
+        "wards" .wards
+        "county" $countyName
+      )
+      "title" $constituencyName
+    }}
+    {{ $.AddPage $page }}
+  {{ end }}
+{{ end }}
+
