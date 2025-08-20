@@ -29,6 +29,8 @@
         {{- .Render "page-transmission" }}
       {{- else if eq .Section "constituencies" }}
         {{- .Render "page-constituencies" }}
+        {{- else if eq .Section "polling-stations" }}
+        {{- .Render "page-polling" }}
       {{- else }}
         {{- .Content }}
       {{- end }}
