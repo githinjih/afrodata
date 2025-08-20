@@ -8,7 +8,7 @@ pluralizeListTitles                          = false
 enableRobotsTXT                              = true
 disableKinds                                 = ["taxonomy","rss","term"]
 [outputs]
-  home = ["HTML","HEALTH","SCHOOLS","POWER","TRANSMISSION","CONSTITUENCIES"]
+  home = ["HTML","HEALTH","SCHOOLS","POWER","TRANSMISSION","CONSTITUENCIES","POLLING"]
  [outputFormats]
    [outputFormats.HEALTH]
      baseName                                 = "health"
@@ -30,6 +30,10 @@ disableKinds                                 = ["taxonomy","rss","term"]
      baseName                                 = "constituencies"
      isPlainText                              = true
      mediaType                                = 'application/json'
+  [outputFormats.POLLING]
+    baseName                                 = "polling"
+    isPlainText                              = true
+    mediaType                                = 'application/json'
    # Extra output format for XML sitemap if sitemap gets to over 50k pages
    # [outputFormats.siteLorem]
     # MediaType             = "application/xml"
