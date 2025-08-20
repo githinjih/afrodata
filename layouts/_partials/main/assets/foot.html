@@ -172,8 +172,9 @@
     {{- $powerJS := resources.Get "js/search/power.ts" | js.Build "js/power.js" }}
     {{- $transmissionJS := resources.Get "js/search/transmission.ts" | js.Build "js/transmission.js" -}}
     {{- $constituenciesJS := resources.Get "js/search/constituencies.ts" | js.Build "js/constituencies.js" -}}
+    {{- $pollingJS := resources.Get "js/search/polling.ts" | js.Build "js/polling.js" -}}
 
-    {{- $JS := ""}}
+    {{- $JS := $scripts }}
     {{- if (eq .Section "health") }}
       {{- $JS = slice $scripts $healthJS | resources.Concat "js/health.js" }}
     {{- else if (eq .Section "schools") }}
@@ -184,6 +185,8 @@
       {{- $JS = slice $scripts $transmissionJS | resources.Concat "js/transmission.js" }}
     {{- else if (eq .Section "constituencies") }}
       {{- $JS = slice $scripts $constituenciesJS | resources.Concat "js/constituencies.js" }}
+    {{- else if (eq .Section "polling-stations") }}
+      {{- $JS = slice $scripts $pollingJS | resources.Concat "js/polling.js" }}
     {{- end -}}
        
     {{- $bundledJS := $JS }}
