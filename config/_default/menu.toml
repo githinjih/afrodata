@@ -25,6 +25,11 @@
   pageRef = "/constituencies"
   weight = 50
 
+[[right]]
+  name = "Polling"
+  pageRef = "/polling-stations"
+  weight = 60
+
 # footer menu
 
 [[footer]]
