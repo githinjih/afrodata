@@ -1,0 +1,32 @@
+{{- $list := slice -}}
+
+{{- $pages := where site.RegularPages "Section" "polling-stations" -}}
+
+{{- range $pages -}}
+
+{{- $pollingStations := ""}}
+  {{- with .Params.wards }}
+    {{ range . }}
+      {{ range .pollingStations }}
+       {{- $pollingStations = .name -}}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
+  {{/* {{- $ward := ""}}
+  {{- with .Params.wards }}
+    {{ range . }}
+       {{- $ward = .name -}}
+    {{- end }}
+  {{- end }} */}}
+
+  {{- $item := dict
+  "title" .Title
+  "county" .Params.county
+  "url" .RelPermalink
+  -}}
+
+  {{- $list = $list | append $item -}}
+{{- end -}}
+
+{{- $list | jsonify -}}
