@@ -32,7 +32,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.148.2
+      HUGO_VERSION: 0.149.0
       HUGO_ENVIRONMENT: production
       TZ: Africa/Nairobi
     steps:
@@ -73,7 +73,7 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "https://shop.afro.co.ke/" \
+            --baseURL "https://data.afro.co.ke/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
       - name: Cache Save
         id: cache-save

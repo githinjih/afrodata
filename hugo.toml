@@ -67,6 +67,7 @@ disableKinds                                 = ["taxonomy","rss","term"]
   noJSConfigInAssets                       = true
   [build.buildStats]
     enable = true
+    disableIDs = true
   [[build.cachebusters]]
     source = 'assets/notwatching/hugo_stats\.json'
     target = 'css'
