@@ -4,9 +4,13 @@
     {{- $pageTitle = printf "%s - %s" .Title .Params.Sub_County }}
   {{- else if eq .Section "schools" }}
     {{- $pageTitle = printf "%s - %s" .Title .Params.Constituency }}
-  {{- else if eq .Section "constituencies" }}
+  {{- else if eq .Section "constituencies"  }}
     {{- $constName := "Constituency"}}
     {{- $pageTitle = printf "%s %s" .Title $constName }}
+  {{- else if eq .Section "polling-stations" }}
+     {{ $prefix := "Polling Stations in" }}
+    {{- $constName := "Constituency"}}
+    {{- $pageTitle = printf "%s %s %s" $prefix .Title $constName }}
   {{- end -}}
 
   <main id="main">
@@ -19,20 +23,29 @@
       </header>
     </div>
     <article class="prose dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:underline prose-ul:list-(--list-square) prose-h2:capitalize prose-h3:capitalize prose-h4:capitalize prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h2:mt-[1.4em] sm:prose-lg md:prose-xl mx-auto mb-3 max-w-(--breakpoint-md) marker:text-inherit button:text-white">
-      {{- if eq .Section "health" }}
-        {{- .Render "page-health" }}
-      {{- else if eq .Section "schools" }}
-        {{- .Render "page-schools" }}
-      {{- else if eq .Section "power" }}
-        {{- .Render "page-power" }}
-      {{- else if eq .Section "transmission" }}
-        {{- .Render "page-transmission" }}
-      {{- else if eq .Section "constituencies" }}
-        {{- .Render "page-constituencies" }}
-        {{- else if eq .Section "polling-stations" }}
+      {{- if eq .Section "pages"}}
+        {{- .Content }}
+      {{- else if eq .Section "polling-stations" }}
         {{- .Render "page-polling" }}
       {{- else }}
-        {{- .Content }}
+       {{- .FirstSection.Content }}
+        <table>
+          <tbody>
+            {{ range $k, $v := .Params }}
+              {{- $key := strings.FirstUpper $k }}
+              {{- if eq $.Section "health"}}
+                {{- $key = $k | replaceRE "_" " " | title}}
+              {{- end }}
+              <tr>
+                <td>{{- $key}}</td>
+                <td>{{ $v }}</td>
+              </tr>
+            {{- end }}
+          </tbody>
+        </table>
+        {{ with .FirstSection.Params.disclaimer }}
+          <p class="notice">Disclaimer: {{ . }}</p>
+        {{- end }}
       {{- end }}
     </article>
   </main>

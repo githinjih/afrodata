@@ -1,74 +1,99 @@
   {{- $title := .Title }}
+  {{- $description := .Params.description }}
+  {{- $constName := "Constituency"}}
   {{- if .IsHome }}
     {{- $title = site.Title }}
   {{ else if and .IsSection (eq .Section "pages")}}
     {{- $title = printf "%s | %s" .Title site.Title }}
+  {{- else if and .IsPage (eq .Section "health") }}
+    {{- $description = printf "Details about %s" .Title }}
   {{- else if and .IsPage (eq .Section "schools") }}
     {{- $title = printf "%s - %s" .Title .Params.Constituency }}
+    {{- $description = printf "Details about %s" $title }}
+  {{- else if and .IsPage (eq .Section "power") }}
+    {{- $description = printf "Details about %s" $title }}
+  {{- else if and .IsPage (eq .Section "transmission") }}
+    {{- $description = printf "Details about %s" $title }}
   {{- else if and .IsPage (eq .Section "constituencies") }}
-    {{- $constName := "Constituency"}}
     {{- $title = printf "%s %s" .Title $constName }}
+    {{- $description = printf "Details about %s" $title }}
+  {{- else if and .IsPage (eq .Section "polling-stations") }}
+    {{ $prefix := "Polling Stations in" }}
+    {{- $title = printf "%s %s %s" $prefix .Title $constName }}
+    {{- $description = printf "A list of %s" $title }}
   {{- end -}}
 
+  {{- $img := resources.GetMatch "image/thumbnail.*" }}
+  {{- if (eq .Kind "page") }}
+    {{- with .Parent.Resources.GetMatch "cover.*" }}
+      {{- $img = . }}
+    {{- end }}
+  {{- else }}
+  {{- with (.Resources.GetMatch "cover.*") }}
+    {{- $img = . }}
+  {{- end }}
+  {{ end -}}
+  
+
   {{- if .IsHome }}
-  <title>{{ site.Title }}</title>
+  <title>{{ $title }}</title>
   <link rel="canonical" href="{{ .Permalink }}">
-  <meta property="og:image:alt" content="{{ site.Title }}">
-  <meta property="og:title" content="{{ site.Title }}">
+  <meta property="og:image:alt" content="{{ $title }}">
+  <meta property="og:title" content="{{ $title }}">
   <meta name="description" content="{{ site.Params.description }}">
   <meta name="twitter:description" content="{{ site.Params.description }}">
   {{- end }}
 
   {{- if .IsSection }}
-  <title>{{ .Title }} | {{ site.Title }}</title>
-  <meta property="og:title" content="{{ .Title}} | {{ site.Title }}">
-  <meta name="twitter:title" content="{{ .Title}} | {{ site.Title }}">
-  <meta name="description" content="{{ .Params.description }}">
-  <meta name="twitter:description" content="{{ .Params.description }}">
+  <title>{{ $title }} | {{ site.Title }}</title>
+  <meta property="og:title" content="{{ $title }} | {{ site.Title }}">
+  <meta name="twitter:title" content="{{ $title }} | {{ site.Title }}">
+  <meta name="description" content="{{ $description }}">
+  <meta name="twitter:description" content="{{ $description }}">
   {{- end }}
 
   {{- if and (.IsPage) (in .Section "pages")  -}}
   <link rel="canonical" href="{{ .Permalink }}">
-  <meta name="description" content="{{ .Params.description }}">
-  <meta property="og:description" content="{{ .Params.description }}">
-  <title>{{ .Title }} | {{ site.Title }}</title>
-  <meta property="og:title" content="{{ .Title }} | {{ site.Title }} ">
-  <meta property="og:image:alt" content="{{ .Title }} | {{ site.Title }}">
-  <meta name="twitter:title" content="{{ .Title }} | {{ site.Title }}">
-  <meta name="twitter:image:alt" content="{{ .Title }} | {{ site.Title }}">
-  <meta name="twitter:description" content="{{ .Params.description }}">
+  <meta name="description" content="{{ $description }}">
+  <meta property="og:description" content="{{ $description }}">
+  <title>{{ $title }} | {{ site.Title }}</title>
+  <meta property="og:title" content="{{ $title }} | {{ site.Title }} ">
+  <meta property="og:image:alt" content="{{ $title }} | {{ site.Title }}">
+  <meta name="twitter:title" content="{{ $title }} | {{ site.Title }}">
+  <meta name="twitter:image:alt" content="{{ $title }} | {{ site.Title }}">
+  <meta name="twitter:description" content="{{ $description }}">
   {{- end }}
 
   {{- if and (.IsPage) (ne .Section "pages")  -}}
   <link rel="canonical" href="{{ .Permalink }}">
-  <meta name="description" content="{{ .FirstSection.Params.Description }}">
-  <meta property="og:description" content="{{ .FirstSection.Params.Description }}">
+  <meta name="description" content="{{ $description }}">
+  <meta property="og:description" content="{{ $description }}">
   <title>{{ $title }}</title>
   <meta property="og:title" content="{{ $title }}">
   <meta property="og:image:alt" content="{{ $title }}">
   <meta name="twitter:title" content="{{ $title }}">
   <meta name="twitter:image:alt" content="{{ $title }}">
   <meta property="article:section" content="{{ .FirstSection.LinkTitle }}">
-  <meta name="twitter:description" content="{{ .FirstSection.Params.description }}">
+  <meta name="twitter:description" content="{{ $description }}">
   {{- end }}
 
   {{- /* sitewide meta */}}
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ site.Title }}">
-  {{- with resources.GetMatch "image/thumbnail.*" }}
+  {{- with $img }}
   <meta property="og:image" content="{{ .Permalink }}">
   <meta property="og:image:type" content="{{ .MediaType.Type }}">
   <meta property="og:image:width" content="{{ .Width }}">
   <meta property="og:image:height" content="{{ .Height }}">
   <meta name="twitter:image" content="{{ .Permalink }}">
   {{- end }}
-  <meta property="og:locale" content="{{ site.Params.locale }}">
-  <meta property="og:type" content="{{ site.Params.website }}">
+  <meta property="og:locale" content="{{ printf "%s_%s" site.Language.LanguageCode (printf "KE")}}">
+  <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="shortcut icon" type="image/x-icon" href="{{ site.Params.favicon | safeURL }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ site.Params.icons.appleicon | absURL }}">
-  <link rel="preconnect" href="{{ site.Params.analytics.url }}">
-  <link rel="dns-prefetch" href="{{ site.Params.analytics.url }}">
+  <link rel="preconnect" href="{{ site.Params.counterscale.url }}">
+  <link rel="dns-prefetch" href="{{ site.Params.counterscale.url }}">
   <meta name="theme-color" content="{{ site.Params.color }}">
   <meta name="robots" content="{{ site.Params.robots }}">
   {{ if .IsHome }}{{ hugo.Generator }}{{- end }}

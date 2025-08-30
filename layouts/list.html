@@ -38,8 +38,8 @@
     <ul class="notice not-prose">
       {{- with .Params.source.title }}<li> Title: {{ . }}</li>{{ end }}
       {{- with .Params.source.author }}<li>Author: {{ . }}</li>{{ end }}
-      {{- with .Params.source.author_link }}<li>Source: <a class="underline text-blue-600 dark:text-blue-400" href="{{ . }}">{{ $.Params.source.author_attribution }}</a></li>{{ end }}
-       {{- with .Params.source.license_link }}<li>License: <a class="underline text-blue-600 dark:text-blue-400" href="{{ . }}">{{- $.Params.source.license_attribution }}</a></li>{{ end }}
+      {{- with .Params.source.author_link }}<li>Source: <a class="underline text-blue-600 dark:text-blue-400 inline-flex" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
+       {{- with .Params.source.license_link }}<li>License: <a class="underline text-blue-600 dark:text-blue-400 inline-flex" href="{{ . }}">{{- $.Params.source.license_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
     </ul>
   </article>
   </div>
