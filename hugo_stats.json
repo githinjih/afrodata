@@ -251,42 +251,6 @@
       "whitespace-normal",
       "z-40"
     ],
-    "ids": [
-      "clear_search_btn",
-      "close-icon",
-      "color-scheme-switch",
-      "contact",
-      "contacting-us",
-      "counterscale-script",
-      "edit-mail",
-      "edit-message",
-      "edit-name",
-      "edit-subject",
-      "edit-url",
-      "embedded-content-from-other-websites",
-      "external-icon",
-      "footer-nav",
-      "footer-toggle",
-      "hamburger",
-      "how-long-we-retain-your-data",
-      "how-we-use-collected-information",
-      "lang-icon",
-      "main",
-      "main-nav",
-      "main-toggle",
-      "next-icon",
-      "non-personal-identification-information",
-      "personal-identification-information",
-      "prev-icon",
-      "privacy-policy-changes",
-      "search",
-      "search-icon",
-      "search_input",
-      "search_results_container",
-      "sharing-your-personal-information",
-      "themeSwitch",
-      "web-browser-cookies",
-      "what-rights-you-have-over-your-data"
-    ]
+    "ids": null
   }
 }
