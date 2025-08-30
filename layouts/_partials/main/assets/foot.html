@@ -194,5 +194,4 @@
       {{- $bundledJS = $JS | minify | fingerprint }}
     {{- end }}
     <script src="{{ $bundledJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $bundledJS.Data.Integrity }}"{{ end }} defer></script>
-
   {{- end }}
