@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.Language.LanguageCode }}" class="dark text-base scroll-smooth font-sans">
+<html lang="{{ site.Language.LanguageCode }}" class="font-sans text-base scroll-smooth dark">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
     {{- end }}
     {{- partialCached "main/assets/theme.html" . }}
   </head>
-  <body class="text-gray-800 antialiased bg-gray-100 dark:bg-gray-950 dark:text-gray-400">
+  <body class="bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-400 antialiased">
     <a class="sr-only" href="#main">Skip to Content</a>
     <div  class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8">
       {{ partialCached "main/header.html" . . }}

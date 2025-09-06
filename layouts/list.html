@@ -7,39 +7,39 @@
 <main id="main">
   <header class="mx-auto max-w-(--breakpoint-md) py-5 lg:py-8">
     <div class="flex flex-col justify-center">
-      <div class="mt-5 inline-block text-sm text-center font-medium tracking-wider text-purple-600 uppercase dark:text-purple-400">
+      <div class="inline-block mt-5 font-medium text-purple-600 dark:text-purple-400 text-sm text-center uppercase tracking-wider">
         <span>{{ .LinkTitle }}</span>
       </div>
-      <h1 class="mt-2 mb-3 text-center text-3xl font-semibold tracking-tight lg:text-4xl lg:leading-snug dark:text-gray-300">{{ .Title }}</h1>
+      <h1 class="mt-2 mb-3 font-semibold dark:text-gray-300 text-3xl lg:text-4xl text-center lg:leading-snug tracking-tight">{{ .Title }}</h1>
     </div>
   </header>
   <article
     class="prose dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-ul:list-(--list-square) prose-h2:capitalize prose-h3:capitalize prose-h4:capitalize prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h2:mt-[1.4em] sm:prose-lg md:prose-xl mx-auto mb-3 max-w-(--breakpoint-md) marker:text-inherit button:text-white">
     <p>{{ .Params.list_description }}</p>
-    <h2 class="text-xl mb-4 font-bold">{{ .Params.search_title }}</h2>
+    <h2 class="mb-4 font-bold text-xl">{{ .Params.search_title }}</h2>
     <div id="search" class="relative flex flex-col">
       <span>
         <input required="" type="text" autocomplete="off" id="{{ $searchInput }}"
-          class="peer w-full rounded-2xl border-2 border-blue-400 bg-transparent p-6 transition focus:border-blue-500 focus:outline-none dark:border-blue-800 dark:focus:border-blue-600"
+          class="peer bg-transparent p-6 border-2 border-blue-400 focus:border-blue-500 dark:border-blue-800 dark:focus:border-blue-600 rounded-2xl focus:outline-none w-full transition"
           disabled>
         <label for="{{ $searchInput }}"
-          class="absolute left-6 pointer-events-none text-gray-600 dark:text-gray-400 translate-y-6 transition peer-focus:-translate-y-1/2 peer-focus:scale-80 peer-focus:bg-gray-100 peer-focus:px-1 peer-focus:text-blue-500 dark:peer-focus:bg-gray-950 dark:peer-focus:text-blue-400">{{
+          class="left-6 absolute dark:peer-focus:bg-gray-950 peer-focus:bg-gray-100 peer-focus:px-1 text-gray-600 dark:peer-focus:text-blue-400 dark:text-gray-400 peer-focus:text-blue-500 peer-focus:scale-80 transition translate-y-6 peer-focus:-translate-y-1/2 pointer-events-none">{{
           $searchPlaceholder }}</label>
       </span>
       <button id="{{ $clearBtn }}"
-        class="absolute right-8 p-3 transition-all translate-y-4 duration-300 border border-blue-500 rounded-full dark:border-blue-800 transition duration-300 rotate-90 hover:rotate-180"
+        class="right-8 absolute p-3 border border-blue-500 dark:border-blue-800 rounded-full rotate-90 hover:rotate-180 transition transition-all translate-y-4 duration-300 duration-300"
         aria-label="Clear Search Results"><svg class="site-icon" {{ $aria }} width="1em" height="1em">
           <use xlink:href="#close-icon"></use>
         </svg></button>
-      <div id="{{ $searchResults }}" class="whitespace-normal pb-8 pr-3 flex flex-col">
+      <div id="{{ $searchResults }}" class="flex flex-col pr-3 pb-8 whitespace-normal">
         {{- /* search results appear here */}}
       </div>
     </div>
     <ul class="notice not-prose">
       {{- with .Params.source.title }}<li> Title: {{ . }}</li>{{ end }}
       {{- with .Params.source.author }}<li>Author: {{ . }}</li>{{ end }}
-      {{- with .Params.source.author_link }}<li>Source: <a class="underline text-blue-600 dark:text-blue-400 inline-flex" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
-       {{- with .Params.source.license_link }}<li>License: <a class="underline text-blue-600 dark:text-blue-400 inline-flex" href="{{ . }}">{{- $.Params.source.license_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
+      {{- with .Params.source.author_link }}<li>Source: <a class="inline-flex text-blue-600 dark:text-blue-400 underline" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="pl-1 site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
+       {{- with .Params.source.license_link }}<li>License: <a class="inline-flex text-blue-600 dark:text-blue-400 underline" href="{{ . }}">{{- $.Params.source.license_attribution }} <svg class="pl-1 site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
     </ul>
   </article>
   </div>

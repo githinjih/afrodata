@@ -7,8 +7,8 @@
   {{- $webPM := .Process "fill 480x480 webp TopLeft" }}
   {{- $webPL := .Process "fill 628x628 webp TopLeft" }}
 
-  <div class="overflow-hidden rounded-md bg-gray-100 transition-all hover:scale-105 dark:bg-gray-800">
-    <div class="relative block aspect-square">
+  <div class="bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden hover:scale-105 transition-all">
+    <div class="block relative aspect-square">
       <picture>
         <source media="(min-width:1024px)" srcset="{{ $webPS.RelPermalink }}" type="{{ $webPS.MediaType.Type }}"  width="{{ $webPS.Width }}" height="{{ $webPM.Height }}">
         <source media="(min-width:640px)" srcset="{{ $webPM.RelPermalink }}" type="{{ $webPM.MediaType.Type }}"  width="{{ $webPM.Width }}" height="{{ $webPM.Height }}">

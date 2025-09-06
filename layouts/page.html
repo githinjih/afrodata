@@ -16,10 +16,10 @@
   <main id="main">
     <div class="mx-auto max-w-(--breakpoint-md) py-5 lg:py-8">
       <header class="flex flex-col justify-center">
-        <div class="flex gap-3 justify-center">
-          <div class="mt-5 inline-block text-sm text-center font-medium tracking-wider text-blue-600 uppercase dark:text-blue-400">{{ with .Parent }}{{ .LinkTitle }}{{ else }}{{ .Title }}{{ end }}</div>
+        <div class="flex justify-center gap-3">
+          <div class="inline-block mt-5 font-medium text-blue-600 dark:text-blue-400 text-sm text-center uppercase tracking-wider">{{ with .Parent }}{{ .LinkTitle }}{{ else }}{{ .Title }}{{ end }}</div>
         </div>
-        <h1 class="mt-2 mb-3 text-center text-3xl font-semibold tracking-tight lg:text-4xl lg:leading-snug dark:text-gray-300">{{ $pageTitle }}</h1>
+        <h1 class="mt-2 mb-3 font-semibold dark:text-gray-300 text-3xl lg:text-4xl text-center lg:leading-snug tracking-tight">{{ $pageTitle }}</h1>
       </header>
     </div>
     <article class="prose dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:underline prose-ul:list-(--list-square) prose-h2:capitalize prose-h3:capitalize prose-h4:capitalize prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h2:mt-[1.4em] sm:prose-lg md:prose-xl mx-auto mb-3 max-w-(--breakpoint-md) marker:text-inherit button:text-white">
