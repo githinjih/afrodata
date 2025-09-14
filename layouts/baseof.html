@@ -23,11 +23,11 @@
   <body class="bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-400 antialiased">
     <a class="sr-only" href="#main">Skip to Content</a>
     <div  class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8">
-      {{ partialCached "main/header.html" . . }}
+      {{ partialCached "main/header.html" . .Section }}
       {{- block "main" . }}
       <!-- The part of the page that begins to differ between templates -->
       {{- end }}
-      {{- partialCached "main/footer.html" . . }}
+      {{- partialCached "main/footer.html" . }}
     </div>
     {{ partialCached "main/assets/svg.html" . -}}
     {{- partial "main/assets/foot.html" . }}
