@@ -82,3 +82,9 @@ disableKinds                                 = ["taxonomy","rss","term"]
     disableWatch = true
     source = 'hugo_stats.json'
     target = 'assets/notwatching/hugo_stats.json'
+[segments]
+  [segments.transmission]
+    [[segments.transmission.includes]]
+      path = '{/transmission,/transmission/**}'
+     [[segments.transmission.includes]]
+      kind = '{section,page}'
