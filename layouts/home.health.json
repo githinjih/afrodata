@@ -8,7 +8,7 @@
 "title" .Title
 "County" .Params.County
 "Constituency" .Params.Sub_County
-"url" .Path
+"url" .RelPermalink
 -}}
 
 {{- $list = $list | append $item -}}

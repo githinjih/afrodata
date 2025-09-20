@@ -9,7 +9,7 @@
   "County" .Params.County
   "Street" .Params.Street
   "Ownership" .Params.Ownership
-  "url" .Path
+  "url" .RelPermalink
 -}}
 
 {{- $list = $list | append $item -}}

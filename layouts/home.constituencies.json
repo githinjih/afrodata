@@ -7,7 +7,7 @@
 {{- $item := dict
   "title" .Title
   "County" .Params.County
-  "url" .Path
+  "url" .RelPermalink
 -}}
 
 {{- $list = $list | append $item -}}

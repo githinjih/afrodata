@@ -10,7 +10,7 @@
 "Level" .Params.Level
 "County" .Params.County
 "Constituency" .Params.Constituency
-"url" .Path
+"url" .RelPermalink
 -}}
 
 {{- $list = $list | append $item -}}

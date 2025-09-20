@@ -9,7 +9,7 @@
 "Type" .Params.Type
 "Capacity (MW)" .Params.Capacity
 "Status" .Params.Status
-"url" .Path
+"url" .RelPermalink
 -}}
 
 {{- $list = $list | append $item -}}
