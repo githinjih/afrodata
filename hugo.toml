@@ -62,9 +62,9 @@ disableKinds                                 = ["taxonomy","rss","term"]
     dir                                    = ':resourceDir/_gen'
     maxAge                                 = -1
 [imaging]
-  quality                                  = 100
+  quality                                  = 95
   hint                                     = 'drawing'
-  resampleFilter                           = 'CatmullRom'
+  resampleFilter                           = 'MitchellNetravali'
 [build]
   noJSConfigInAssets                       = true
   [build.buildStats]
