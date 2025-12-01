@@ -61,8 +61,10 @@ disableKinds                                 = ["taxonomy","rss","term"]
   [caches.assets]
     dir                                    = ':resourceDir/_gen'
     maxAge                                 = -1
-[image]
+[imaging]
   quality                                  = 100
+  hint                                     = 'drawing'
+  resampleFilter                           = 'CatmullRom'
 [build]
   noJSConfigInAssets                       = true
   [build.buildStats]
