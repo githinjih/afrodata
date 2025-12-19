@@ -11,11 +11,11 @@
         <tr>
           <td>{{ .name }}</td>
           <td>
-            <ul>
+            <ol>
             {{ range $k, $v := .pollingStations }}
               <li>{{ $v.name -}}</li>
             {{ end }}
-            </ul>
+            </ol>
           </td>
         </tr>
       {{ end }}
