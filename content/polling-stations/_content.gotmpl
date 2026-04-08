@@ -1,30 +1,31 @@
-{{- $data := "" }}
 {{- $URL := "https://raw.githubusercontent.com/stevehoober254/kenya-county-data/refs/heads/main/county_data.json" }}
-{{ with try (resources.GetRemote $URL) }}
-  {{- with .Err }}
-    {{- errorf "%s" . }}
-   {{ else with .Value }}
-    {{- $data = . | transform.Unmarshal }}
-  {{- end }}
-{{- else }}
-  {{- errorf "Unable to get remote resource %q" $URL }}
-{{- end -}}
-
-{{ range $data }}
-  {{ $countyName := .name }}
-  {{ range .constituencies }}
-    {{ $constituencyName := .name }}
-    {{ $page := dict
-      "content" (dict "mediaType" "text/markdown" "value" "")
-      "kind" "page"
-      "path" (printf "%s" $constituencyName)
-      "params" (dict 
-        "wards" .wards
-        "county" $countyName
-      )
-      "title" $constituencyName
-    }}
-    {{ $.AddPage $page }}
-  {{ end }}
-{{ end }}
+{{ with resources.GetRemote $URL }}
+  {{ with try (. | transform.Unmarshal) }}
+    {{ with .Err }}
+      {{ errorf "Failed to unmarshal %s: %s" $URL .Err }}
+    {{ else }}
+      {{ range .Value }}
+        {{- $countyName := .name }}
+        {{- range .constituencies }}
+          {{- $constituencyName := .name }}
+          {{- $content := dict "mediaType" "text/markdown" "value" "" }}
+          {{- $params := dict
+            "wards"  .wards
+            "county" $countyName
+          }}
+          {{- $page := dict
+            "content" $content
+            "kind"    "page"
+            "path"    (printf "%s" $constituencyName)
+            "params"  $params
+            "title"   $constituencyName
+          }}
+          {{ $.AddPage $page }}
+        {{- end }}
+      {{ end }} {{/* range */}}
+    {{ end }} {{/* with .Err */}}
+  {{ end }} {{/* with try */}}
+{{ else }}
+  {{ errorf "Unable to find %s" $URL }}
+{{ end }} {{/* with resources.GetRemote */}}
 
