@@ -87,7 +87,7 @@
   <meta property="og:image:height" content="{{ .Height }}">
   <meta name="twitter:image" content="{{ .Permalink }}">
   {{- end }}
-  <meta property="og:locale" content="{{ printf "%s_%s" site.Language.LanguageCode (printf "KE")}}">
+  <meta property="og:locale" content="{{ printf "%s_%s" site.Language.Locale (printf "KE")}}">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="shortcut icon" type="image/x-icon" href="{{ site.Params.favicon | safeURL }}">

@@ -1,6 +1,6 @@
 baseURL                                      = "https://data.afro.co.ke/"
 title                                        = "AfroData"
-languageCode                                 = "en"
+locale                                       = "en"
 timezone                                     = "Africa/Nairobi"
 timeout                                      = "600s"
 copyright                                    = "{year} {title}"
