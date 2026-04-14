@@ -113,3 +113,41 @@
 .notice {
   font-size: var(--text-base);
 }
+
+/*============================
+
+* Pagefind CSS 
+=============================*/
+
+.result {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--spacing) * 5);
+  padding-top: calc(var(--spacing) * 5);
+  padding-bottom: calc(var(--spacing) * 5);
+  border-bottom: 2px solid var(--color-gray-300);
+  letter-spacing: var(--tracking-tight);
+  display: inline-block;
+}
+
+.dark .result {
+  border-bottom: 2px solid var(--color-gray-800);
+}
+
+.result a {
+  line-height: 1;
+  font-size: var(--text-lg);
+  text-decoration: underline;
+  color: var(--color-blue-600);
+}
+
+.dark .result a {
+  color: var(--color-blue-400);
+}
+
+.result p {
+  font-size: var(--text-sm);
+  opacity: .95;
+}

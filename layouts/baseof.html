@@ -22,7 +22,7 @@
   </head>
   <body class="bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-400 antialiased">
     <a class="sr-only" href="#main">Skip to Content</a>
-    <div  class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8">
+    <div class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8" data-pagefind-filter="section:{{ .Section }}">
       {{ partialCached "main/header.html" . .Section }}
       {{- block "main" . }}
       <!-- The part of the page that begins to differ between templates -->

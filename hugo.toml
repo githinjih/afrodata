@@ -8,41 +8,7 @@ pluralizeListTitles                          = false
 enableRobotsTXT                              = true
 disableKinds                                 = ["taxonomy","rss","term"]
 [outputs]
-  home = ["HTML","HEALTH","SCHOOLS","POWER","TRANSMISSION","CONSTITUENCIES","POLLING"]
- [outputFormats]
-   [outputFormats.HEALTH]
-     baseName                                 = "health"
-     isPlainText                              = true
-     mediaType                                = 'application/json'
-   [outputFormats.POWER]
-     baseName                                 = "power"
-     isPlainText                              = true
-     mediaType                                = 'application/json'
-   [outputFormats.SCHOOLS]
-     baseName                                 = "schools"
-     isPlainText                              = true
-     mediaType                                = 'application/json'
-   [outputFormats.TRANSMISSION]
-     baseName                                 = "transmission"
-     isPlainText                              = true
-     mediaType                                = 'application/json'
-   [outputFormats.CONSTITUENCIES]
-     baseName                                 = "constituencies"
-     isPlainText                              = true
-     mediaType                                = 'application/json'
-  [outputFormats.POLLING]
-    baseName                                 = "polling"
-    isPlainText                              = true
-    mediaType                                = 'application/json'
-   # Extra output format for XML sitemap if sitemap gets to over 50k pages
-   # [outputFormats.siteLorem]
-    # MediaType             = "application/xml"
-    #BaseName              = "sitehealth"
-    #suffix                = "xml"
-    #IsHTML                = false
-    #IsPlainText           = false
-    #noUgly                = true
-    #Rel                   = "alternate"
+  home = ["HTML"]
 [markup]
   [markup.goldmark.parser]
     [markup.goldmark.parser.attribute]

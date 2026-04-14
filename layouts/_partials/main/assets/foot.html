@@ -7,7 +7,7 @@
   {{- $img := resources.GetMatch "image/thumbnail.*" -}}
   {{- $logo := resources.GetMatch "image/logo.*" -}}
 
-  {{- if or (.IsHome) (eq .Page.Kind "404") (and (.IsPage) (ne .Section "pages")) }}
+  {{- if or (.IsHome) (.IsSection) (eq .Page.Kind "404") (and (.IsPage) (ne .Section "pages")) }}
   <script src="{{ $scripts.RelPermalink }}" integrity="{{ $scripts.Data.Integrity }}" defer></script>
   {{ end }}
 
@@ -166,29 +166,13 @@
 
   {{- end }}
 
-  {{- if and (not .IsPage) (.IsSection) }}
-    {{- $healthJS := resources.Get "js/search/health.ts" | js.Build "js/health.js" }}
-    {{- $schoolsJS := resources.Get "js/search/schools.ts" | js.Build "js/schools.js" }}
-    {{- $powerJS := resources.Get "js/search/power.ts" | js.Build "js/power.js" }}
-    {{- $transmissionJS := resources.Get "js/search/transmission.ts" | js.Build "js/transmission.js" -}}
-    {{- $constituenciesJS := resources.Get "js/search/constituencies.ts" | js.Build "js/constituencies.js" -}}
-
-    {{- $JS := $scripts }}
-    {{- if (eq .Section "health") }}
-      {{- $JS = slice $scripts $healthJS | resources.Concat "js/health.js" }}
-    {{- else if (eq .Section "schools") }}
-      {{- $JS = slice $scripts $schoolsJS | resources.Concat "js/schools.js" }}
-    {{- else if (eq .Section "power") }}
-      {{- $JS = slice $scripts $powerJS | resources.Concat "js/power.js" }}
-    {{- else if (eq .Section "transmission") }}
-      {{- $JS = slice $scripts $transmissionJS | resources.Concat "js/transmission.js" }}
-    {{- else if (eq .Section "constituencies") }}
-      {{- $JS = slice $scripts $constituenciesJS | resources.Concat "js/constituencies.js" }}
-    {{- end -}}
-       
-    {{- $bundledJS := $JS }}
-    {{- if hugo.IsProduction }}
-      {{- $bundledJS = $JS | minify | fingerprint }}
+  {{- if .IsSection }}
+    {{ $js := resources.Get "js/pagefind.js" }}
+    {{- if not hugo.IsProduction}}
+       <script type="module" src="{{ $js.RelPermalink }}"></script>
+     {{ else }}
+       {{ $js = $js | minify | fingerprint }}
+       <script type="module" src="{{ $js.RelPermalink }}"></script>
     {{- end }}
-    <script src="{{ $bundledJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $bundledJS.Data.Integrity }}"{{ end }} defer></script>
+    <script src="/pagefind/pagefind-component-ui.js" type="module" defe></script>
   {{- end }}

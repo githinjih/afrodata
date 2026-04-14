@@ -7,6 +7,6 @@
   "scripts": {
 		"update": "npx npm-check-updates -u && npm install",
 		"rebase": "git pull --rebase --autostash origin main",
-		"dev": "hugo --gc && hugo server"
+		"dev": "hugo --gc && npx pagefind --site public && hugo server"
 	}
 }
