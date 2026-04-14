@@ -76,7 +76,7 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/hugo_cache"
-        # --- ADD PAGEFIND HERE ---
+       # --- ADD PAGEFIND HERE ---
       - name: Post-process with Pagefind
         run: npx pagefind --site public
       # -------------------------
