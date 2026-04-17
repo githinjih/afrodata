@@ -169,10 +169,10 @@
   {{- if .IsSection }}
     {{ $js := resources.Get "js/pagefind.js" }}
     {{- if not hugo.IsProduction}}
-       <script type="module" src="{{ $js.RelPermalink }}"></script>
+       <script type="module" src="{{ $js.RelPermalink }}" defer></script>
      {{ else }}
        {{ $js = $js | minify | fingerprint }}
-       <script type="module" src="{{ $js.RelPermalink }}"></script>
+       <script type="module" src="{{ $js.RelPermalink }}" defer></script>
     {{- end }}
-    <script src="/pagefind/pagefind-component-ui.js" type="module" defe></script>
+    <script src="/pagefind/pagefind-component-ui.js" type="module" defer></script>
   {{- end }}

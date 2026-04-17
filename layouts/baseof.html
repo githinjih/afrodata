@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{- partial "main/head.html" . -}}
+    {{- partial "head.html" . -}}
     {{- with (templates.Defer (dict "key" "global")) }}
       {{- with resources.Get "css/main.css" }}
         {{- $opts := dict "minify" (not hugo.IsDevelopment) }}
@@ -18,18 +18,18 @@
         {{- end }}
       {{- end }}
     {{- end }}
-    {{- partialCached "main/assets/theme.html" . }}
+    {{- partialCached "assets/theme.html" . }}
   </head>
   <body class="bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-400 antialiased">
     <a class="sr-only" href="#main">Skip to Content</a>
     <div class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8" data-pagefind-filter="section:{{ .Section }}">
-      {{ partialCached "main/header.html" . .Section }}
+      {{ partialCached "header.html" . .Section }}
       {{- block "main" . }}
       <!-- The part of the page that begins to differ between templates -->
       {{- end }}
-      {{- partialCached "main/footer.html" . }}
+      {{- partialCached "footer.html" . }}
     </div>
-    {{ partialCached "main/assets/svg.html" . -}}
-    {{- partial "main/assets/foot.html" . }}
+    {{ partialCached "assets/svg.html" . -}}
+    {{- partial "assets/foot.html" . }}
   </body>
 </html>
