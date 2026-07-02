@@ -1,0 +1,12 @@
+{{/* PUT IT AT VERY TOP OF THE PARTIAL */}}
+{{- $lazyLoading := default true .LazyLoading }}
+{{- $fetchPriority:= default "" .FetchPriority -}}
+
+{{- with .Resources.GetMatch "cover.*" }}
+  {{- $avifIMG := .Process "fill 580x580 avif TopLeft" }}
+  <div class="bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden hover:scale-105 transition-all">
+    <div class="block relative aspect-square">
+      <img src="{{ $avifIMG.RelPermalink }}" class="object-cover transition-all" width="{{ $avifIMG.Width }}" height="{{ $avifIMG.Height }}" alt="" {{- with $fetchPriority }} fetchpriority="{{ . }}" {{- end }} {{- if $lazyLoading }} loading="lazy" {{- end }}>
+    </div>
+  </div>
+{{- end }}

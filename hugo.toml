@@ -1,0 +1,58 @@
+baseURL                                      = "https://data.afro.co.ke/"
+title                                        = "AfroData"
+locale                                       = "en"
+timezone                                     = "Africa/Nairobi"
+timeout                                      = "600s"
+copyright                                    = "{year} {title}"
+pluralizeListTitles                          = false
+enableRobotsTXT                              = true
+disableKinds                                 = ["taxonomy","rss","term"]
+[outputs]
+  home = ["HTML"]
+[markup]
+  [markup.goldmark.parser]
+    [markup.goldmark.parser.attribute]
+      block                                = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.extras]
+        [markup.goldmark.extensions.extras.superscript]
+          enable                            = true
+[caches]
+  [caches.getresource]
+    dir                                    = ':resourceDir'
+    maxAge                                 = "720h"
+  [caches.images]
+    dir                                    = ':cacheDir/images'
+    maxAge                                 = "1440h"
+  [caches.assets]
+    dir                                    = ':resourceDir/_gen'
+    maxAge                                 = -1
+[imaging]
+  [imaging.avif]
+    hint                                  = 'text'
+    quality                               = 75
+[build]
+  noJSConfigInAssets                       = true
+  [build.buildStats]
+    enable = true
+    disableIDs = true
+  [[build.cachebusters]]
+    source = 'assets/notwatching/hugo_stats\.json'
+    target = 'css'
+  [[build.cachebusters]]
+    source = '(postcss|tailwind)\.config\.js'
+    target = 'css'
+[module]
+  [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
+[segments]
+  [segments.transmission]
+    [[segments.transmission.includes]]
+      path = '{/transmission,/transmission/**}'
+     [[segments.transmission.includes]]
+      kind = '{section,page}'

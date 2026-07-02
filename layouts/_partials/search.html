@@ -1,0 +1,17 @@
+{{- $searchInput := print "search-input" }}
+{{- $searchPlaceholder := printf "Search %s..." . }}
+{{- $searchResults := print "search-results" }}
+
+<div id="search-container" data-section="{{ . | lower }}" class="not-prose">
+<span>
+  <input required="" type="text" autocomplete="off" id="{{ $searchInput }}"
+    class="peer bg-transparent p-6 border-2 border-blue-400 focus:border-blue-500 dark:border-blue-800 dark:focus:border-blue-600 rounded-2xl focus:outline-none w-full transition"
+  >
+  <label for="{{ $searchInput }}"
+    class="left-6 absolute dark:peer-focus:bg-gray-950 peer-focus:bg-gray-100 peer-focus:px-1 text-gray-600 dark:peer-focus:text-blue-400 dark:text-gray-400 peer-focus:text-blue-500 peer-focus:scale-80 transition translate-y-6 peer-focus:-translate-y-1/2 pointer-events-none">{{
+    $searchPlaceholder }}</label>
+</span>
+ <div id="{{ $searchResults }}" class="flex flex-col pr-3 pb-8 whitespace-normal">
+   {{- /* search results appear here */}}
+ </div>
+</div>

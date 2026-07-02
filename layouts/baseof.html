@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale }}" class="font-sans text-base scroll-smooth dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{- partial "head.html" . -}}
+    {{- with (templates.Defer (dict "key" "global")) }}
+      {{- with resources.Get "css/main.css" }}
+        {{- $opts := dict "minify" (not hugo.IsDevelopment) }}
+        {{- with . | css.TailwindCSS $opts }}
+          {{- if hugo.IsDevelopment }}
+            <link rel="stylesheet" href="{{ .RelPermalink }}">
+          {{- else }}
+            {{- with . | fingerprint }}
+              <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+            {{- end }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- partialCached "assets/theme.html" . }}
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-950 text-gray-800 dark:text-gray-400 antialiased">
+    <a class="sr-only" href="#main">Skip to Content</a>
+    <div class="container mx-auto max-w-(--breakpoint-lg) p-5 lg:py-8" data-pagefind-filter="section:{{ .Section }}">
+      {{ partialCached "header.html" . .Section }}
+      {{- block "main" . }}
+      <!-- The part of the page that begins to differ between templates -->
+      {{- end }}
+      {{- partialCached "footer.html" . }}
+    </div>
+    {{ partialCached "assets/svg.html" . -}}
+    {{- partial "assets/foot.html" . }}
+  </body>
+</html>

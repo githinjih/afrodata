@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@source "hugo_stats.json";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Atkinson-Hyperlegible-Next-Regular */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Atkinson Hyperlegible Next Regular";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local(""),
+    url("/fonts/Atkinson-Hyperlegible-Next-Regular.woff2") format("woff2");
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+/* Atkinson-Hyperlegible-Bold */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Atkinson Hyperlegible Next Bold";
+  font-style: bold;
+  font-weight: bold;
+  src:
+    local(""),
+    url("/fonts/Atkinson-Hyperlegible-Next-Bold.woff2") format("woff2");
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+/* Cookie-Regular */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Cookie Regular";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local(""),
+    url("/fonts/Cookie-Regular.woff2") format("woff2");
+  /* Chrome 26+, Opera 23+, Firefox 39+ */
+}
+
+@theme {
+  --font-sans: "Atkinson Hyperlegible Next Regular", "Arial";
+  --font-sans-bold: "Atkinson Hyperlegible Next Bold", "Arial", "sans-serif";
+  --font-cookie: "Cookie Regular", "cursive";
+  --font-serif: "Georgia", "serif";
+  --flex-even: 1 1 0%;
+  --grid-cols-auto: repeat(auto-fit, minmax(250px, 1fr));
+  --list-square: square;
+}
+
+
+@layer base {
+  h1, h2, h3, h4,
+  bold, strong {
+    font-family: var(--font-sans-bold);
+  }
+
+  button,
+  .button {
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+    cursor: pointer;
+  }
+
+  .button-secondary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--spacing) * 1);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-gray-500);
+    background-color: var(--color-blue-600);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-white);
+  }
+
+  .button-secondary:hover {
+    background-color: var(--color-blue-800);
+  }
+
+  .dark .button-secondary {
+    background-color: var(--color-blue-800);
+  }
+
+  .dark .button-secondary:hover {
+    background-color: var(--color-blue-900);
+  }
+
+  .site-icon {
+    position: relative;
+    height: 1em;
+    width: 1em;
+    align-self: center;
+    fill: currentColor;
+  }
+}
+
+/* Toggle dropdowns */
+.main-nav.toggled ul,
+.footer-nav.toggled ul {
+  display: inline-flex;
+}
+
+#clear_search_btn {
+  display: none;
+}
+
+.notice {
+  font-size: var(--text-base);
+}
+
+/*============================
+
+* Pagefind CSS 
+=============================*/
+
+.result {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--spacing) * 5);
+  padding-top: calc(var(--spacing) * 5);
+  padding-bottom: calc(var(--spacing) * 5);
+  border-bottom: 2px solid var(--color-gray-300);
+  letter-spacing: var(--tracking-tight);
+  display: inline-block;
+}
+
+.dark .result {
+  border-bottom: 2px solid var(--color-gray-800);
+}
+
+.result a {
+  line-height: 1;
+  font-size: var(--text-lg);
+  text-decoration: underline;
+  color: var(--color-blue-600);
+}
+
+.dark .result a {
+  color: var(--color-blue-400);
+}
+
+.result p {
+  font-size: var(--text-sm);
+  opacity: .95;
+}

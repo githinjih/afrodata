@@ -1,0 +1,39 @@
+{{ $path := "data/healthcare_facilities.json" }}
+{{ with resources.Get $path }}
+  {{ with try (. | transform.Unmarshal) }}
+    {{ with .Err }}
+      {{ errorf "Failed to unmarshal %s: %s" $path .Err }}
+    {{ else }}
+      {{ range .Value.features }}
+        {{- with .properties }}
+          {{- /* Add page. */}}
+          {{- $content := dict "mediaType" "text/markdown" }}
+          {{- $params := dict 
+            "Facility Name" (trim .Facility_N " ")
+            "Type" (trim .Type " ")
+            "Owner" (trim .Owner " ")
+            "County" (trim .County " ")
+            "Sub_County" (trim .Sub_County " ")
+            "Division" (trim .Division " ")
+            "Location" (trim .Location " ")
+            "Sub_Location" (trim .Sub_Locati " ")
+            "Constituency" (trim .Constituen " ")
+            "Nearest To" (trim .Nearest_To " ")
+            "Latitude" (trim .Latitude " ")
+            "Longitude" (trim .Longitude " ")
+          }}
+          {{- $page := dict
+            "content" $content
+            "kind" "page"
+            "title" .Facility_N
+            "params" $params
+            "path" (printf "%s" (urlize .Facility_N))
+          }}
+          {{ $.AddPage $page }}
+        {{ end }}
+      {{ end }} {{/* range */}}
+    {{ end }} {{/* with .Err */}}
+  {{ end }} {{/* with try */}}
+{{ else }}
+  {{ errorf "Unable to find %s" $path }}
+{{ end }} {{/* with resources.Get */}}
