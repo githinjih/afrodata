@@ -1,0 +1,21 @@
+{{- if .Param "page.enable_call_to_action" | default true }}
+  <div class="bg-gray-100 dark:bg-gray-900 mx-auto my-10 p-8 border border-gray-200 dark:border-gray-800 rounded-2xl max-w-3xl text-gray-900 dark:text-gray-100">
+    <div class="flex-col cta-wrapper">
+      <p class="mb-3 font-sans-bold dark:text-white text-2xl">{{ i18n "cta_title" (dict "siteTitle" site.Title )}} 🙌</p>
+    
+    {{/* <!-- SECTION 2: WhatsApp Channel (Full width clean button) --> */}}
+    {{- $platforms := partial "_funcs/social-platforms.html" . }}
+    {{- $matches := where site.Params.social.author "platform" "whatsapp" }}
+    {{- with $matches }}
+      {{- $whatsapp := index . 0 }}
+      {{- $entry := index $platforms "whatsapp" }}
+      <a href="{{ $entry.url }}{{ $whatsapp.id }}"
+        class="flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 shadow-sm px-4 py-3 rounded-xl w-full font-medium text-white transition duration-200">
+        <span class="flex">{{ partial "icon.html" "whatsapp" }}</span>
+        {{ i18n "cta_whatsapp" }}
+      </a>
+    {{- end }}
+
+    <p class="mt-4 text-gray-600 dark:text-gray-400 text-xs text-center italic">{{ i18n "cta_subtext" }} </p>
+  </div>
+{{- end }}

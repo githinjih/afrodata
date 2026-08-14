@@ -19,18 +19,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Define tool versions
-      GO_VERSION: 1.26.4
-      HUGO_VERSION: 0.163.3
-      NODE_VERSION: 24.16.0
+      GO_VERSION: 1.26.5
+      HUGO_VERSION: 0.165.0
+      NODE_VERSION: 24.18.0
 
       # Set the build time zone
       TZ: Africa/Nairobi
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
           fetch-depth: 0
+          lfs: false
 
       - name: Setup Pages
         id: pages
@@ -56,9 +57,9 @@ jobs:
       - name: Install Hugo
         run: |
           echo "Installing Hugo ${HUGO_VERSION}..."
-          curl -sfL --output-dir "${{ runner.temp }}" -O "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          curl -sfL --output-dir "${{ runner.temp }}" -O "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_linux-amd64.tar.gz"
           mkdir "${HOME}/.local/hugo"
-          tar -C "${HOME}/.local/hugo" -xf "${{ runner.temp }}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          tar -C "${HOME}/.local/hugo" -xf "${{ runner.temp }}/hugo_${HUGO_VERSION}_linux-amd64.tar.gz"
           echo "${HOME}/.local/hugo" >> "${GITHUB_PATH}"
 
       - name: Log tool versions
@@ -80,6 +81,13 @@ jobs:
             git fetch --unshallow
           fi
 
+      - name: Initialize Git submodules
+        run: |
+          if [[ -f .gitmodules ]]; then
+            echo "Initializing Git submodules..."
+            git submodule update --init --recursive
+          fi
+
       - name: Install Node.js dependencies
         run: |
           if [[ -f package-lock.json ]]; then
@@ -89,9 +97,9 @@ jobs:
 
       - name: Cache restore
         id: cache-restore
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
-          path: ${{ runner.temp }}/hugo_cache
+          path: ${{ runner.temp }}/.cache/hugo
           key: hugo-${{ github.run_id }}
           restore-keys: hugo-
 
@@ -102,15 +110,12 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
-            --cacheDir "${{ runner.temp }}/hugo_cache"
-          
-          echo "Running Pagefind search indexer..."
-          npx -y pagefind --site public
+            --cacheDir "${{ runner.temp }}/.cache/hugo"
 
       - name: Cache save
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         with:
-          path: ${{ runner.temp }}/hugo_cache
+          path: ${{ runner.temp }}/.cache/hugo
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload artifact
@@ -126,5 +131,5 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v5
-        

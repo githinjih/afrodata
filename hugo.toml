@@ -56,3 +56,6 @@ disableKinds                                 = ["taxonomy","rss","term"]
       path = '{/transmission,/transmission/**}'
      [[segments.transmission.includes]]
       kind = '{section,page}'
+[security]
+  [security.exec]
+    allow = ['^((dart-)?sass|go|npx|babel|node|git|postcss|tailwindcss)$']
