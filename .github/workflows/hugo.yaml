@@ -111,6 +111,11 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" \
             --cacheDir "${{ runner.temp }}/.cache/hugo"
+      
+      - name: Build search index with Pagefind
+        run: |
+          echo "Running Pagefind..."
+          npx -y pagefind --site public
 
       - name: Cache save
         uses: actions/cache/save@v6
