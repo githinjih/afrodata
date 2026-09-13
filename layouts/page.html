@@ -29,10 +29,10 @@
             {{ range $k, $v := .Params }}
               {{- $key := strings.FirstUpper $k }}
               {{- if eq $.Section "health"}}
-                {{- $key = $k | replaceRE "_" " " | title}}
+                {{- $key = $k | replaceRE "_" " " | title }}
               {{- end }}
               <tr>
-                <td>{{- $key}}</td>
+                <td>{{- $key }}</td>
                 <td>{{ $v }}</td>
               </tr>
             {{- end }}
