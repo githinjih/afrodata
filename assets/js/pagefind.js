@@ -1,27 +1,47 @@
-import * as pagefind from '/pagefind/pagefind.js';
+document.addEventListener('DOMContentLoaded', async () => {
+  const searchbox = document.querySelector('pagefind-searchbox');
+  const section = searchbox ? searchbox.getAttribute('instance') : null;
 
-await pagefind.init();
+  if (!section) return;
 
-const container = document.getElementById('search-container');
-const section   = container.dataset.section;
-const input     = document.getElementById('search-input');
-const results   = document.getElementById('search-results');
+  // 1. Wait until the web component definition is registered
+  await customElements.whenDefined('pagefind-searchbox');
 
-input.addEventListener('input', async () => {
-  const term = input.value.trim();
-  if (!term) { results.innerHTML = ''; return; }
+  if (window.PagefindComponents) {
+    const manager = window.PagefindComponents.getInstanceManager();
+    const instance = manager.getInstance(section);
 
-  const search = await pagefind.search(term + '*', {
-    filters: { section: section }
-  });
+    if (instance) {
+      // 2. Set the section filter on the instance
+      instance.triggerFilters({ type: [section] });
 
-  const first20 = search.results.slice(0, 20);
-  const data = await Promise.all(first20.map(r => r.data()));
+      // 3. Attach listeners directly to the input element rendered inside searchbox
+      const input = searchbox.querySelector('input');
+      const dropdown = searchbox.querySelector('.pf-searchbox-dropdown');
 
-  results.innerHTML = data.map(r => `
-    <div class="result">
-      <a href="${r.url}"><strong>${r.meta.title}</strong></a>
-      <p>${r.excerpt}</p>
-    </div>
-  `).join('');
+      if (input && dropdown) {
+        // Function to toggle dropdown visibility based on text content
+        const updateVisibility = () => {
+          const query = input.value.trim();
+          if (query === '') {
+            dropdown.style.display = 'none';
+          } else {
+            dropdown.style.display = '';
+          }
+        };
+
+        // Hide initially on page load
+        updateVisibility();
+
+        // Listen for input changes (typing, backspacing, clearing input)
+        input.addEventListener('input', () => {
+          updateVisibility();
+          if (input.value.trim() === '') {
+            // Clear instance search state when input is completely cleared
+            instance.triggerSearch('');
+          }
+        });
+      }
+    }
+  }
 });

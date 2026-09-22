@@ -6,36 +6,39 @@
     {{ else }}
       {{ range .Value.features }}
         {{- with .properties }}
-          {{- /* Add page. */}}
-          {{- $content := dict "mediaType" "text/markdown" }}
-          {{- $filename := printf "%s" (urlize .SCHOOL_NAM) }} 
-          {{ if in $filename ".." }}
-          {{- $filename = replace $filename ".." "-" }}
-          {{ else if in $filename "." }}
-          {{- $filename = replace $filename "." "-" }}
-          {{- end }} 
-          {{- $params := dict 
-            "Name" (trim .SCHOOL_NAM " " | lower | title)
-            "Level" (trim .LEVEL " ")
-            "Code" (trim .CODE " ")
-            "County" (trim .County " ")
-            "Constituency" (trim .SUB_COUNTY " ")
-            "District" (trim .DISTRICT " ")
-            "Zone" (trim .ZONE " ")
-            "Ward" (trim .Ward " ")
-            "Status" (trim .Status " ")
-            "Longitude" (trim .X_Coord " ")
-            "Latitude" (trim .Y_Coord " ")
-            "Source" (trim .Source " ")
-          }}
-          {{- $page := dict
-            "content" $content
-            "kind" "page"
-            "title" (trim .SCHOOL_NAM " " | lower | title)
-            "params" $params
-            "path" $filename
-          }}
-          {{ $.AddPage $page }}
+          {{- $schoolName := trim .SCHOOL_NAM " " }}
+          {{- /* Check if school name is non-empty before processing */}}
+          {{- if and $schoolName (ne $schoolName "") }}
+            {{- $content := dict "mediaType" "text/markdown" }}
+            {{- $filename := printf "%s" (urlize $schoolName) }} 
+            {{ if in $filename ".." }}
+            {{- $filename = replace $filename ".." "-" }}
+            {{ else if in $filename "." }}
+            {{- $filename = replace $filename "." "-" }}
+            {{- end }} 
+            {{- $params := dict 
+              "Name" ($schoolName | lower | title)
+              "Level" (trim .LEVEL " ")
+              "Code" (trim .CODE " ")
+              "County" (trim .County " ")
+              "Constituency" (trim .SUB_COUNTY " ")
+              "District" (trim .DISTRICT " ")
+              "Zone" (trim .ZONE " ")
+              "Ward" (trim .Ward " ")
+              "Status" (trim .Status " ")
+              "Longitude" (trim .X_Coord " ")
+              "Latitude" (trim .Y_Coord " ")
+              "Source" (trim .Source " ")
+            }}
+            {{- $page := dict
+              "content" $content
+              "kind" "page"
+              "title" ($schoolName | lower | title)
+              "params" $params
+              "path" $filename
+            }}
+            {{ $.AddPage $page }}
+          {{- end }} {{/* if $schoolName */}}
         {{ end }}
       {{ end }} {{/* range */}}
     {{ end }} {{/* with .Err */}}

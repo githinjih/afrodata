@@ -1,8 +1,26 @@
  {{- /* Goatcounter tracking script - goatcounter.com */}}
 
-<script data-goatcounter="https://afrodata.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-  
+  {{- if hugo.IsProduction }}
+    <script data-goatcounter="https://afrodata.goatcounter.com/count"
+    async src="//gc.zgo.at/count.js"></script>
+  {{- end }}
+
+  {{/* Pagefind JS */}}
+
+  {{- if .IsSection }}
+    <!-- Pagefind Web Component Assets -->
+    <script type="module" src="/pagefind/pagefind-component-ui.js" defer></script>
+
+    <!-- Your Custom Pagefind Script -->
+    {{ $js := resources.Get "js/pagefind.js" }}
+    {{- if not hugo.IsProduction }}
+      <script type="module" src="{{ $js.RelPermalink }}" defer></script>
+    {{- else }}
+      {{ $js = $js | minify | fingerprint }}
+      <script type="module" src="{{ $js.RelPermalink }}" defer></script>
+    {{- end }}
+  {{- end }}
+
   {{- $scripts := resources.Get "js/scripts.js" | minify | fingerprint }}
   {{- $img := resources.GetMatch "image/thumbnail.*" -}}
   {{- $logo := resources.GetMatch "image/logo.*" -}}
@@ -164,15 +182,4 @@
     {{ jsonify (dict "indent" "") $crumbs | safeJS }}
     </script>
 
-  {{- end }}
-
-  {{- if .IsSection }}
-    {{ $js := resources.Get "js/pagefind.js" }}
-    {{- if not hugo.IsProduction}}
-       <script type="module" src="{{ $js.RelPermalink }}" defer></script>
-     {{ else }}
-       {{ $js = $js | minify | fingerprint }}
-       <script type="module" src="{{ $js.RelPermalink }}" defer></script>
-    {{- end }}
-    <script src="/pagefind/pagefind-component-ui.js" type="module" defer></script>
   {{- end }}

@@ -17,7 +17,7 @@
     <div class="relative flex flex-col not-prose">
       {{ partial "search.html" .Section }}
     </div>
-    <ul class="notice not-prose">
+    <ul class="pt-8 notice not-prose">
       {{- with .Params.source.title }}<li> Title: {{ . }}</li>{{ end }}
       {{- with .Params.source.author }}<li>Author: {{ . }}</li>{{ end }}
       {{- with .Params.source.author_link }}<li>Source: <a class="inline-flex text-blue-600 dark:text-blue-400 underline" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="pl-1 site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}

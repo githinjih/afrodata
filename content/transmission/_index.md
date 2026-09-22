@@ -10,7 +10,7 @@ params:
   source:
     title:  Kenya - Transmission Stations
     author: Kenya Power and Lighting Company (KPLC)
-    author_link: https://energydata.info/dataset/kenya-schools
+    author_link: https://energydata.info/dataset/kenya-transmission-stations
     author_attribution: World Bank
     license_link: https://creativecommons.org/licenses/by/4.0/
     license_attribution: CC By 4.0
