@@ -1,24 +1,24 @@
 {{- $sectionName := . | lower }}
 
 <div id="search-container" class="not-prose">
-  <pagefind-searchbox instance="{{ $sectionName }}" placeholder="Search {{ . }}..." 
-    hide-shortcut 
+  <pagefind-searchbox instance="{{ $sectionName }}" placeholder="Search {{ . }}..."
+    hide-shortcut
     show-keyboard-hints="false"
   >
     {{ `
     <script type="text/pagefind-template">
-      <a 
-        class="block hover:bg-blue-50 dark:hover:bg-gray-800 p-3 rounded-lg transition" 
-        id="{{ aria.result_id }}" 
-        href="{{ url }}" 
-        role="option" 
+      <a
+        class="block rounded-lg p-3 transition hover:bg-blue-50 dark:hover:bg-gray-800"
+        id="{{ aria.result_id }}"
+        href="{{ url }}"
+        role="option"
         aria-selected="false"
       >
-        <div class="font-bold text-blue-600 dark:text-blue-400 underline" id="{{ aria.title_id }}">
+        <div class="font-bold text-blue-600 underline dark:text-blue-400" id="{{ aria.title_id }}">
           {{ meta.title }}
         </div>
         {{#if excerpt}}
-          <p class="text-gray-600 dark:text-gray-300 text-sm">{{+ excerpt +}}</p>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{+ excerpt +}}</p>
         {{/if}}
       </a>
     </script>

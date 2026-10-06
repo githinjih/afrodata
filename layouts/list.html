@@ -4,24 +4,24 @@
 <main id="main">
   <header class="mx-auto max-w-(--breakpoint-md) py-5 lg:py-8">
     <div class="flex flex-col justify-center">
-      <div class="inline-block mt-5 font-medium text-purple-600 dark:text-purple-400 text-sm text-center uppercase tracking-wider">
+      <div class="mt-5 inline-block text-center text-sm font-medium tracking-wider text-purple-600 uppercase dark:text-purple-400">
         <span>{{ .LinkTitle }}</span>
       </div>
-      <h1 class="mt-2 mb-3 font-semibold dark:text-gray-300 text-3xl lg:text-4xl text-center lg:leading-snug tracking-tight">{{ .Title }}</h1>
+      <h1 class="mt-2 mb-3 text-center text-3xl font-semibold tracking-tight lg:text-4xl lg:leading-snug dark:text-gray-300">{{ .Title }}</h1>
     </div>
   </header>
   <article
-    class="prose dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline prose-ul:list-(--list-square) prose-h2:capitalize prose-h3:capitalize prose-h4:capitalize prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-h2:mt-[1.4em] sm:prose-lg md:prose-xl mx-auto mb-3 max-w-(--breakpoint-md) marker:text-inherit button:text-white">
+    class="mx-auto mb-3 max-w-(--breakpoint-md) prose marker:text-inherit sm:prose-lg md:prose-xl dark:prose-invert prose-h2:mt-[1.4em] prose-ul:list-(--list-square) prose-h3:text-2xl prose-h2:text-3xl prose-h4:text-xl prose-a:text-blue-600 button:text-white prose-h2:capitalize prose-h3:capitalize prose-h4:capitalize prose-a:no-underline dark:prose-a:text-blue-400">
     <p>{{ .Params.list_description }}</p>
-    <h2 class="mb-4 font-bold text-xl">{{ .Params.search_title }}</h2>
-    <div class="relative flex flex-col not-prose">
+    <h2 class="mb-4 text-xl font-bold">{{ .Params.search_title }}</h2>
+    <div class="not-prose relative flex flex-col">
       {{ partial "search.html" .Section }}
     </div>
-    <ul class="pt-8 notice not-prose">
+    <ul class="notice not-prose pt-8">
       {{- with .Params.source.title }}<li> Title: {{ . }}</li>{{ end }}
       {{- with .Params.source.author }}<li>Author: {{ . }}</li>{{ end }}
-      {{- with .Params.source.author_link }}<li>Source: <a class="inline-flex text-blue-600 dark:text-blue-400 underline" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="pl-1 site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
-       {{- with .Params.source.license_link }}<li>License: <a class="inline-flex text-blue-600 dark:text-blue-400 underline" href="{{ . }}">{{- $.Params.source.license_attribution }} <svg class="pl-1 site-icon" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
+      {{- with .Params.source.author_link }}<li>Source: <a class="inline-flex text-blue-600 underline dark:text-blue-400" href="{{ . }}">{{ $.Params.source.author_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
+       {{- with .Params.source.license_link }}<li>License: <a class="inline-flex text-blue-600 underline dark:text-blue-400" href="{{ . }}">{{- $.Params.source.license_attribution }} <svg class="site-icon pl-1" aria-hidden="true" width="1em" height="1em"><use xlink:href="#external-icon"></use></svg></a></li>{{ end }}
     </ul>
   </article>
   </div>
