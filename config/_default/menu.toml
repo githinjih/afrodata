@@ -31,9 +31,3 @@
   name = "Privacy"
   pageRef = "/pages/policy"
   weight = 10
-
-[[footer]]
-  name = "Contact"
-  pageRef = "/pages/contact"
-  weight = 20
-
