@@ -40,7 +40,7 @@
   {{- end }}
 
   {{- if .IsHome }}
-    {{- $item := dict  
+    {{- $item := dict
       "@context" "https://schema.org"
       "@type" "Website"
       "name" site.Title
@@ -116,24 +116,24 @@
     {{- $item := dict
       "@context" "https://schema.org/"
       "@type" "BlogPosting"
-      "mainEntityOfPage" (dict 
-        "@type" "WebPage" 
+      "mainEntityOfPage" (dict
+        "@type" "WebPage"
         "@id" .Permalink
       )
       "headline" .Title
       "name" .Title
       "articleSection" .FirstSection.LinkTitle
-      "description" .FirstSection.Params.description
+      "description" .FirstSection.Description
       "inLanguage" site.Language.Locale
-      "author" (dict 
-        "@type" "Person" 
+      "author" (dict
+        "@type" "Person"
         "name" site.Params.author.name
         "url" site.Home.Permalink
       )
       "publisher" (dict
         "@type" "Organization"
         "name" site.Title
-        "logo" (dict 
+        "logo" (dict
           "@type" "ImageObject"
           "url" $logo.Permalink
           "width" $logo.Width

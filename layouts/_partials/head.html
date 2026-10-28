@@ -1,5 +1,5 @@
   {{- $title := .Title }}
-  {{- $description := .Params.description }}
+  {{- $description := .Description }}
   {{- $constName := "Constituency"}}
   {{- if .IsHome }}
     {{- $title = site.Title }}
@@ -33,7 +33,7 @@
     {{- $img = . }}
   {{- end }}
   {{ end -}}
-  
+
 
   {{- if .IsHome }}
   <title>{{ $title }}</title>
