@@ -1,13 +1,66 @@
 {
+  "languages": {
+    "CSS": {
+      "language_servers": [
+        "vscode-css-language-server",
+        "tailwindcss-language-server",
+      ],
+    },
+    "Hugo": {
+      "language_servers": [
+        "!vscode-css-language-server",
+        "hugo-html-language-server",
+        "tailwindcss-language-server",
+        "..."
+      ],
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "rustywind",
+          "arguments": [
+            "--stdin",
+            "--custom-regex",
+            "(?:class(?:Name)?\\s*=\\s*|\\$\\w*[cC]lass\\w*\\s*:?=\\s*)[\"']([_a-zA-Z0-9\\.,\\s\\-:\\[\\]()/!]+)[\"']",
+          ],
+        },
+      },
+    },
+  },
   "lsp": {
     "tailwindcss-language-server": {
       "settings": {
+        "validate": false,
+        "includeLanguages": {
+          "hugo": "html",
+        },
+        "files": {
+          "exclude": [
+            "**/.git/**",
+            "**/node_modules/**",
+            "**/public/**",
+            "**/resources/**",
+            "**/exampleSite/**",
+            "**/content/**",
+            "**/data/**"
+          ],
+        },
         "experimental": {
           "configFile": {
             "assets/css/main.css": [
+              "assets/css/**",
               "layouts/**"
             ]
-          }
+          },
+          "classRegex": [
+            "class=\"([^\"]*)\"",
+            "class='([^']*)'",
+            ["\\$\\w*[cC]lass\\w*\\s*:?=([^}]*)", "[\"`]([^\"`]*)[\"`]"],
+            "\"\\w*[cC]lass\\w*\"\\s+[\"`]([^\"`]*)[\"`]",
+            [
+              "classList\\.(?:add|remove|toggle|replace)\\(([^)]*)\\)",
+              "[\"'`]([^\"'`]*)[\"'`]",
+            ],
+          ]
         }
       }
     }
